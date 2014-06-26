@@ -1,0 +1,43 @@
+ATOF(3)                    Linux Programmer's Manual                   ATOF(3)
+
+
+
+NAME
+       atof - convert a string to a double
+
+SYNOPSIS
+       #include <stdlib.h>
+
+       double atof(const char *nptr);
+
+DESCRIPTION
+       The  atof() function converts the initial portion of the string pointed
+       to by nptr to double.  The behavior is the same as
+
+           strtod(nptr, NULL);
+
+       except that atof() does not detect errors.
+
+RETURN VALUE
+       The converted value.
+
+ATTRIBUTES
+   Multithreading (see pthreads(7))
+       The atof() function is thread-safe with exceptions.  It can  be  safely
+       used  in  multithreaded  applications,  as  long as setlocale(3) is not
+       called to change the locale.
+
+CONFORMING TO
+       SVr4, POSIX.1-2001, 4.3BSD, C89, C99.
+
+SEE ALSO
+       atoi(3), atol(3), strtod(3), strtol(3), strtoul(3)
+
+COLOPHON
+       This page is part of release 3.55 of the Linux  man-pages  project.   A
+       description  of  the project, and information about reporting bugs, can
+       be found at http://www.kernel.org/doc/man-pages/.
+
+
+
+GNU                               2013-10-08                           ATOF(3)

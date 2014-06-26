@@ -1,0 +1,216 @@
+LD.SO(8)                                                              LD.SO(8)
+
+
+
+NAME
+       ld.so/ld-linux.so - dynamic linker/loader
+
+DESCRIPTION
+       ld.so loads the shared libraries needed by a program, prepares the pro‐
+       gram to run, and then runs it.  Unless  explicitly  specified  via  the
+       -static  option to ld during compilation, all Linux programs are incom‐
+       plete and require further linking at run time.
+
+       The necessary shared libraries needed by the program are  searched  for
+       in the following order
+
+       o      Using      the      environment     variable     LD_LIBRARY_PATH
+              (LD_AOUT_LIBRARY_PATH for a.out programs).  Except if  the  exe‐
+              cutable is a setuid/setgid binary, in which case it is ignored.
+
+       o      From  the  cache file /etc/ld.so.cache which contains a compiled
+              list of candidate libraries previously found  in  the  augmented
+              library  path.  Libraries  installed  in  hardware  capabilities
+              directories (see below) are prefered to other libraries.
+
+       o      In the default path /lib, and then /usr/lib.
+
+COMMAND LINE OPTIONS
+       --list List all dependencies and how they are resolved.
+
+       --verify
+              Verify that program  is  dynamically  linked  and  this  dynamic
+              linker can handle it.
+
+       --library-path PATH
+              Override   LD_LIBRARY_PATH  environment  variable  setting  (see
+              below).
+
+       --ignore-rpath LIST
+              Ignore RPATH and RUNPATH information in object  names  in  LIST.
+              This  option  has  been  supported by glibc2 for about one hour.
+              Then it was renamed into:
+
+       --inhibit-rpath LIST
+
+ENVIRONMENT
+       LD_LIBRARY_PATH
+              A colon-separated list of directories in which to search for ELF
+              libraries  at  execution-time.   Similar to the PATH environment
+              variable.
+
+       LD_PRELOAD
+              A whitespace-separated list of additional,  user-specified,  ELF
+              shared  libraries  to  be loaded before all others.  This can be
+              used  to  selectively  override  functions   in   other   shared
+              libraries.   For  setuid/setgid  ELF binaries, only libraries in
+              the standard search directories that are  also  setgid  will  be
+              loaded.
+
+       LD_TRACE_LOADED_OBJECTS
+              If  present,  causes  the  program  to  list its dynamic library
+              dependencies, as if run by ldd, instead of running normally.
+
+       LD_BIND_NOW
+              If present, causes the dynamic linker to resolve all symbols  at
+              program startup instead of when they are first referenced.
+
+       LD_BIND_NOT
+              Do  not  update the GOT (global offset table) and PLT (procedure
+              linkage table) after resolving a symbol.
+
+       LD_AOUT_LIBRARY_PATH
+              A colon-separated list of directories in  which  to  search  for
+              a.out libraries at execution-time.  Similar to the PATH environ‐
+              ment variable.
+
+       LD_AOUT_PRELOAD
+              The name of an additional, user-specified, a.out shared  library
+              to  be loaded after all others.  This can be used to selectively
+              override functions in other shared libraries.
+
+       LD_NOWARN
+              Suppress warnings about a.out libraries with incompatible  minor
+              version numbers.
+
+       LD_WARN
+              If set to non-empty string, warn about unresolved symbols.
+
+       LD_KEEPDIR
+              Don't ignore the directory in the names of a.out libraries to be
+              loaded.  Use of this option is strongly discouraged.
+
+       LD_DEBUG
+              Output verbose debugging information about the  dynamic  linker.
+              If  set to `all' prints all debugging information it has, if set
+              to `help' prints a help message about which  categories  can  be
+              specified in this environment variable.
+
+       LD_DEBUG_OUTPUT
+              File  where LD_DEBUG output should be fed into, default is stan‐
+              dard output. LD_DEBUG_OUTPUT is ignored for setuid/setgid  bina‐
+              ries.
+
+       LD_VERBOSE
+              If set to non-empty string, output symbol versioning information
+              about the program if querying information about the program (ie.
+              either LD_TRACE_LOADED_OBJECTS has been set, or --list or --ver‐
+              ify options have been given to the dynamic linker).
+
+       LD_PROFILE
+              Shared object to be profiled.
+
+       LD_PROFILE_OUTPUT
+              File where LD_PROFILE output should be stored, default is  stan‐
+              dard  output.  LD_PROFILE_OUTPUT  is  ignored  for setuid/setgid
+              binaries.
+
+       LD_ASSUME_KERNEL
+              Every DSO (Dynamic Shared Object, aka shared library)  can  tell
+              the  dynamic  linker  in  glibc  which minimum OS ABI version is
+              needed. The information about the  minimum  OS  ABI  version  is
+              encoded  in a ELF note section usually named .note.ABI-tag. This
+              is used to determine which library to load when multiple version
+              of   the   same   library  is  installed  on  the  system.   The
+              LD_ASSUME_KERNEL environment variable overrides the kernel  ver‐
+              sion  used  by  the dynamic linker to determine which library to
+              load.
+
+RPATH TOKEN EXPANSION
+       The runtime linker provides a number of tokens that can be used  in  an
+       rpath specification (DT_RPATH or DT_RUNPATH).
+
+       $ORIGIN
+              ld.so understands the string $ORIGIN (or equivalently ${ORIGIN})
+              in an rpath specification to mean the directory  containing  the
+              application   executable.   Thus,   an  application  located  in
+              somedir/app  could  be  compiled  with   gcc   -Wl,-rpath,'$ORI‐
+              GIN/../lib'  so  that  it  finds an associated shared library in
+              somedir/lib no matter where somedir is located in the  directory
+              hierarchy.
+
+       $PLATFORM
+              The  string  $PLATFORM (or equivalently ${PLATFORM}) in an rpath
+              specifcation expands  to  the  processor  type  of  the  current
+              machine. Please note that on some architectures the Linux kernel
+              doesn't provide a platform string to the dynamic linker.
+
+       $LIB   The string $LIB (or equivalently ${LIB}) in an rpath corresponds
+              to  the system libraries directory, which is /lib for the native
+              architecture on FHS compliant GNU/Linux systems.
+
+HARDWARE CAPABILITIES
+       Libraries might be compiled using hardware-specific instructions  which
+       do not exist on all CPU. Such libraries should be installed in directo‐
+       ries  whose  name   defines   the   hardware   capabilities   such   as
+       /usr/lib/sse2/. The dynamic linker checks these directories against the
+       hardware of the machine and selects the  best  suitable  version  of  a
+       given  library.  Hardware capabilities directories could be cascaded to
+       combine CPU features. Hardware capabilities depends  on  the  CPU.  The
+       following names are currently recognized:
+
+       Alpha  ev4, ev5, ev56, ev6, ev67
+
+       MIPS   loongson2e, loongson2f, octeon, octeon2
+
+       PowerPC
+              4xxmac,  altivec, arch_2_05, arch_2_06, booke, cellbe, dfp, efp‐
+              double, efpsingle,  fpu,  ic_snoop,  mmu,  notb,  pa6t,  power4,
+              power5,  power5+,  power6x,  ppc32,  ppc601,  ppc64,  smt,  spe,
+              ucache, vsx
+
+       SPARC  flush, muldiv, stbar, swap, ultra3, v9, v9v, v9v2
+
+       s390   dfp, eimm, esan3, etf3enh,  g5,  highgprs,  hpage,  ldisp,  msa,
+              stfle, z900, z990, z9-109, z10, zarch
+
+
+       x86 (32-bit only)
+              acpi,  apic,  clflush,  cmov,  cx8,  dts, fxsr, ht, i386,
+              i486, i586, i686, mca, mmx,  mtrr,  pat,  pbe,  pge,  pn,
+              pse36, sep, ss, sse, sse2, tm
+
+FILES
+       /lib/ld.so          a.out dynamic linker/loader
+       /lib/ld-linux.so.*  ELF dynamic linker/loader
+       /etc/ld.so.cache    File  containing a compiled list of directo‐
+                           ries in which to search for libraries and an
+                           ordered list of candidate libraries.
+       /etc/ld.so.preload  File  containing a whitespace separated list
+                           of ELF shared libraries to be loaded  before
+                           the  program.  libraries and an ordered list
+                           of candidate libraries.
+       /etc/ld.so.nohwcap  When this file is present the dynamic linker
+                           will  load  the  non-optimized  version of a
+                           library, even if the CPU supports the  opti‐
+                           mized version.
+       lib*.so*            shared libraries
+
+SEE ALSO
+       ldd(1), ldconfig(8).
+
+BUGS
+       Currently ld.so has no means of unloading and searching for com‐
+       patible or newer version of libraries.
+
+       ld.so functionality is only available for  executables  compiled
+       using libc version 4.4.3 or greater.
+
+AUTHORS
+       David  Engel, Eric Youngdale, Peter MacDonald, Hongjiu Lu, Linus
+       Torvalds, Lars Wirzenius and Mitch D'Souza (not  necessarily  in
+       that order).
+
+
+
+                                  26 May 2007                         LD.SO(8)

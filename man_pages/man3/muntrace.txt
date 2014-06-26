@@ -1,0 +1,39 @@
+MTRACE(3)                  Linux Programmer's Manual                 MTRACE(3)
+
+
+
+NAME
+       mtrace, muntrace - malloc debugging
+
+SYNOPSIS
+       #include <mcheck.h>
+
+       void mtrace(void);
+
+       void muntrace(void);
+
+DESCRIPTION
+       The  function  mtrace() installs handlers for malloc(3), realloc(3) and
+       free(3).  The function muntrace() disables these handlers.
+       The environment variable MALLOC_TRACE defines  a  file  where  mtrace()
+       writes  its output.  This file must be writable to the user or mtrace()
+       will do nothing.  If the file is not empty it will be truncated.
+
+CONFORMING TO
+       These are GNU extensions.
+
+NOTES
+       The output of mtrace() will be ASCII but not in a friendly format.   So
+       glibc comes with a perl-script called mtrace to make sense of it.
+
+SEE ALSO
+       malloc(3), malloc_hook(3)
+
+COLOPHON
+       This  page  is  part of release 3.35 of the Linux man-pages project.  A
+       description of the project, and information about reporting  bugs,  can
+       be found at http://man7.org/linux/man-pages/.
+
+
+
+GNU                               2002-07-20                         MTRACE(3)
