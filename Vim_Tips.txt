@@ -292,42 +292,6 @@ matchit.vim         : % now matches tags <tr><td><script> <?php etc
 
 
 ----------------------------------------
-" MAKE IT EASY TO UPDATE/RELOAD _vimrc
-:nmap ,s :source $VIM/_vimrc
-:nmap ,v :e $VIM/_vimrc
-:e $MYVIMRC         : edits your _vimrc whereever it might be  [N]
-" How to have a variant in your .vimrc for different PCs [N]
-if $COMPUTERNAME == "NEWPC"
-ab mypc vista
-else
-ab mypc dell25
-endif
-
-
-----------------------------------------
-" splitting windows
-:vsplit other.php       # vertically split current file with other.php [N]
-
-
-----------------------------------------
-"VISUAL MODE (easy to add other HTML Tags)
-:vmap sb "zdi<b><C-R>z</b><ESC>  : wrap <b></b> around VISUALLY selected Text
-:vmap st "zdi<?= <C-R>z ?><ESC>  : wrap <?=   ?> around VISUALLY selected Text
-
-
-----------------------------------------
-"vim 7 tabs
-vim -p fred.php joe.php             : open files in tabs
-:tabe fred.php                      : open fred.php in a new tab
-:tab ball                           : tab open files
-:close                              : close a tab but leave the buffer *N*
-" vim 7 forcing use of tabs from .vimrc
-:nnoremap gf <C-W>gf
-:cab      e  tabe
-:tab sball                           : retab all files in buffer (repair) [N]
-
-
-----------------------------------------
 " Exploring
 :e .                            : file explorer
 :Exp(lore)                      : file explorer note capital Ex
@@ -601,19 +565,6 @@ das                                   : delete a sentence
 :set shiftwidth=3                     : for shift/tabbing
 :set vb t_vb=".                       : set silent (no beep)
 :set browsedir=buffer                 : Maki GUI File Open use current directory
-
-
-----------------------------------------
-" launching Win IE
-:nmap ,f :update<CR>:silent !start c:\progra~1\intern~1\iexplore.exe file://%:p<CR>
-:nmap ,i :update<CR>: !start c:\progra~1\intern~1\iexplore.exe <cWORD><CR>
-
-
-----------------------------------------
-" FTPing from VIM
-cmap ,r  :Nread ftp://209.51.134.122/public_html/index.html
-cmap ,w  :Nwrite ftp://209.51.134.122/public_html/index.html
-gvim ftp://www.somedomain.com/index.html # uses netrw.vim
 
 
 ----------------------------------------
