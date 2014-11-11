@@ -2,6 +2,8 @@
 "----------------------------------------
 /\%>20c\s*                  : find all empty space characters in columns greater than 20
 /\%x3a                      : find the character defined by the ASCII code 0x3a
+:%s/\S\+/\=repeat(' ', strlen(submatch(0)))/g
+                            : Replace words with same length empty string.
 :'<,'>s@\(.* \)\(:Make.\{-}\)\(:if\)@\=submatch(1) . submatch(2) . nr2char(13) . repeat(' ', strlen(submatch(1)) - 1) . '\'.submatch(3)@g
                             : replace using expression to calculate length of submatch and replace with equal number of spaces
                             : This particular commands is related to conversion to multi-line commands in vimrc file (commit #5d02ff0705)
