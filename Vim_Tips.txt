@@ -3,10 +3,20 @@
 /\%>20c\s*                  : find all empty space characters in columns greater than 20
 /\%x3a                      : find the character defined by the ASCII code 0x3a
 :%s/\S\+/\=repeat(' ', strlen(submatch(0)))/g
-                            : Replace words with same length empty string.
+                            : Replace using expression to calculate length of submatch and replace with equal number of spaces
 :'<,'>s@\(.* \)\(:Make.\{-}\)\(:if\)@\=submatch(1) . submatch(2) . nr2char(13) . repeat(' ', strlen(submatch(1)) - 1) . '\'.submatch(3)@g
-                            : replace using expression to calculate length of submatch and replace with equal number of spaces
-                            : This particular commands is related to conversion to multi-line commands in vimrc file (commit #5d02ff0705)
+                            : Using expression to convert long commands to neatly formatted multi-line commands in vimrc file (commit #5d02ff0705)
+:digraph                    : Displays digraph characters (i.e. non-ASCII characters) and their keyboard shortcut.
+                            : To print digraph character press <Ctrl-k> followed by keyboard shortcut.
+                            : Goodones -
+                            :       pp ¶    00 ∞    k3 ϟ    0u ☺    o3 ѫ    f3 ѳ  
+                            : OK -
+                            :       4a ۴    ae æ    ez ǯ    ju ю    kj ќ    0U ☻
+:fromline,tolineg/case/.,/break/s/\n/§
+                            : Substitute and replace in multiple sections of a file with section range defined by a 
+                            : start (:g/pat/.) and end (,/pat/) pattern.
+                            :   This particular command collapses the full range between a 'case' and and its related 
+                            :   'break' into a single line with \n replaced by § (digraph SE).
 
 "----------------------------------------
 /joe/e                      : cursor set to End of match
