@@ -17,6 +17,10 @@
                             : start (:g/pat/.) and end (,/pat/) pattern.
                             :   This particular command collapses the full range between a 'case' and and its related 
                             :   'break' into a single line with \n replaced by § (digraph SE).
+:cs add ../cscope.out %:p:h:h
+                            : Prepend path to relative file names in pre-built cross-ref file.
+                            : In this case prepending the parent of the directory of the current file.
+
 
 "----------------------------------------
 /joe/e                      : cursor set to End of match
