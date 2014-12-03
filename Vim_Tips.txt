@@ -20,6 +20,9 @@
 :cs add ../cscope.out %:p:h:h
                             : Prepend path to relative file names in pre-built cross-ref file.
                             : In this case prepending the parent of the directory of the current file.
+zt  z.  zb                  : Redraw current line at top, middle or bottom of the screen respectively.
+CTRL-b  CTRL-f              : Scroll backwards (upwards), Scroll forward (downwards)
+
 
 
 "----------------------------------------
