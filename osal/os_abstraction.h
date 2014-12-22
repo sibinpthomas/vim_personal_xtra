@@ -60,6 +60,17 @@ INT32 pltfm_thread_create(OUT pltfm_thread_t*,
                                                                        (pltfm_thread_arg_t)(t_ar)))
 
 /*
+INT32 pltfm_thread_cancel(IN pltfm_thread_t);
+*/
+#define pltfm_thread_cancel(t)              ((INT32)pthread_cancel((pltfm_thread_t)(t)))
+
+/*
+INT32 pltfm_thread_join(IN pltfm_thread_t,
+                        OUT void **retval);
+*/
+#define pltfm_thread_join(t, retval)        ((INT32)pthread_join((pltfm_thread_t)(t), (retval)))
+
+/*
 INT32 pltfm_thread_attr_init(OUT pltfm_thread_attr_t*);
 */
 #define pltfm_thread_attr_init(t_at)        ((INT32)pthread_attr_init((pltfm_thread_attr_t)(t_at)))
