@@ -12,6 +12,7 @@ extern "C"
 
 #include "generic_type_abstraction.h"
 #include "clib_abstraction.h"
+#include "utilities.h"
 #include "os_abstraction.h"
 
 #ifdef __cplusplus

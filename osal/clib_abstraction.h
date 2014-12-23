@@ -1,6 +1,5 @@
 /*
  * Abstractions for functions declared in C standard header files.
- * Also declaring additional generic helper functions.
  */
 
 #ifndef _H_CLIB_ABSTRACTION_
@@ -57,12 +56,6 @@ extern "C"
 /* Abstractions for Random Number Generator functions. */
 #define pltfm_srand(seed)                   srand((unsigned int)(seed))
 #define pltfm_rand()                        ((INT32)rand())
-
-/* Bit manipulation primitives. */
-#define BIT(n)                              ((unsigned)(n))
-#define EXTRACT_BITNUM(val, bitnum)         (((val) >> (bitnum)) & 1)
-#define SET_BITNUM(val, bitnum)             ((val) |= (1 << (bitnum)))
-#define CLR_BITNUM(val, bitnum)             ((val) &= (~(1 << (bitnum))))
 
 #ifdef __cplusplus
 }
