@@ -142,18 +142,18 @@ typedef unsigned char                       BOOLEAN;
  * optional turning off/on of these qualifiers/storage-class-definitions.
  */
 /* Declaration of 'static' variable/function */
-#ifdef PLTFM_HAVE_STATIC_DECL
-#define DECL_STATIC                         static
-#else  /* PLTFM_HAVE_STATIC_DECL */
+#ifdef PLTFM_NO_STATIC_DECL
 #define DECL_STATIC
-#endif /* PLTFM_HAVE_STATIC_DECL */
+#else  /* PLTFM_NO_STATIC_DECL */
+#define DECL_STATIC                         static
+#endif /* PLTFM_NO_STATIC_DECL */
 
 /* Declaration of 'const' variable */
-#ifdef PLTFM_HAVE_CONST_DECL
-#define DECL_CONST                          const
-#else  /* PLTFM_HAVE_CONST_DECL */
+#ifdef PLTFM_NO_CONST_DECL
 #define DECL_CONST
-#endif /* PLTFM_HAVE_CONST_DECL */
+#else  /* PLTFM_NO_CONST_DECL */
+#define DECL_CONST                          const
+#endif /* PLTFM_NO_CONST_DECL */
 
 /* Definition for IN, OUT & INOUT Function/API parameter qualifiers. */
 #define IN
