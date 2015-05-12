@@ -90,7 +90,7 @@ extern "C"
  */
 #ifndef API_RESULT
 /* Definition of API_RESULT */
-typedef unsigned short int                  API_RESULT;
+typedef UINT16                              API_RESULT;
 #endif /* API_RESULT */
 
 #ifndef CHAR
