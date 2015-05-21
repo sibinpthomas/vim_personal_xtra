@@ -12,7 +12,6 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#include <stdio.h>
 #include <unistd.h>
 #include <pthread.h>
 #include "generic_type_abstraction.h"

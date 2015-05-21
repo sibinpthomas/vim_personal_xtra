@@ -88,11 +88,6 @@ extern "C"
 /* 
  * Non-numeric data types 
  */
-#ifndef API_RESULT
-/* Definition of API_RESULT */
-typedef UINT16                              API_RESULT;
-#endif /* API_RESULT */
-
 #ifndef CHAR
 /* Definition of CHAR */
 typedef char                                CHAR;
@@ -102,63 +97,6 @@ typedef char                                CHAR;
 /* Definition of UCHAR */
 typedef unsigned char                       UCHAR;
 #endif /* UCHAR */
-
-#ifndef BOOLEAN
-/* Definition of BOOLEAN */
-typedef unsigned char                       BOOLEAN;
-#endif /* BOOLEAN */
-
-
-/* 
- * Return type constants.
- */
-#ifndef API_SUCCESS
-/* Definition of API_SUCCESS */
-#define API_SUCCESS                         ((API_RESULT)0u)
-#endif /* API_SUCCESS */
-
-#ifndef API_FAILURE
-/* Definition of API_FAILURE */
-#define API_FAILURE                         ((API_RESULT)~(0u))
-#endif /* API_FAILURE */
-
-
-/* 
- * BOOLEAN type constants.
- */
-#ifndef BOOL_TRUE
-/* Definition of BOOL_TRUE */
-#define BOOL_TRUE                           ((BOOLEAN)1u)
-#endif /* BOOL_TRUE */
-
-#ifndef BOOL_FALSE
-/* Definition of BOOL_FALSE */
-#define BOOL_FALSE                          ((BOOLEAN)0u)
-#endif /* BOOL_FALSE */
-
-
-/*
- * Abstraction for certain C storage classes and type qualifiers to enable the
- * optional turning off/on of these qualifiers/storage-class-definitions.
- */
-/* Declaration of 'static' variable/function */
-#ifdef PLTFM_NO_STATIC_DECL
-#define DECL_STATIC
-#else  /* PLTFM_NO_STATIC_DECL */
-#define DECL_STATIC                         static
-#endif /* PLTFM_NO_STATIC_DECL */
-
-/* Declaration of 'const' variable */
-#ifdef PLTFM_NO_CONST_DECL
-#define DECL_CONST
-#else  /* PLTFM_NO_CONST_DECL */
-#define DECL_CONST                          const
-#endif /* PLTFM_NO_CONST_DECL */
-
-/* Definition for IN, OUT & INOUT Function/API parameter qualifiers. */
-#define IN
-#define OUT
-#define INOUT
 
 #ifdef __cplusplus
 }
