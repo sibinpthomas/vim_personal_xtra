@@ -57,6 +57,10 @@ extern "C"
 #define pltfm_srand(seed)                   srand((unsigned int)(seed))
 #define pltfm_rand()                        ((INT32)rand())
 
+/* Safe string functions. */
+#define pltfm_strcpy_s(d, s, d_size)        d[d_size - 1] = '\0';\
+                                            ((CHAR *)strncpy((char *)(d), (char *)(s), (size_t)(d_size - 1)))
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
