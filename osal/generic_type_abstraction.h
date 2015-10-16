@@ -84,6 +84,12 @@ extern "C"
 
 #endif /* INT8, UINT8 */
 
+/*
+ * Fast integer types.
+ */
+typedef unsigned int                        UINT16_F;
+typedef int                                 INT16_F;
+
 
 /* 
  * Non-numeric data types 
