@@ -86,9 +86,25 @@ extern "C"
 
 /*
  * Fast integer types.
+ * Integer type is guaranteed to be at least 16 bits wide,
+ * as per C specification.
  */
 typedef unsigned int                        UINT16_F;
 typedef int                                 INT16_F;
+
+/*
+ * Maximum width integer types.
+ * Long integer type is guaranteed to be at least 32 bits wide,
+ * as per C specification.
+ */
+#if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
+    typedef unsigned long long                  UINTMAX;
+    typedef long long                           INTMAX;
+#else
+    /* C 89/90 */
+    typedef unsigned long                       UINTMAX;
+    typedef long                                INTMAX;
+#endif /* __STDC_VERSION__ */
 
 
 /* 

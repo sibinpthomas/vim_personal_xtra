@@ -62,6 +62,27 @@ typedef UINT8                               BOOLEAN;
 #define CLR_BITNUM(val, bitnum)             ((val) &= (~(1 << (bitnum))))
 
 
+/* Host Unsigned integer type to UINT8 BE/LE buffer. */
+UINT16 _htole_bufn(UINTMAX hnum, UINT8 *buf, UINT16 nbytes);
+UINT16 _htobe_bufn(UINTMAX hnum, UINT8 *buf, UINT16 nbytes);
+
+#define H2LE_BUFN(hnum, buf, nbytes)        _htole_bufn((hnum), (buf), (UINT16)(nbytes))
+#define H2BE_BUFN(hnum, buf, nbytes)        _htobe_bufn((hnum), (buf), (UINT16)(nbytes))
+
+#define H2LE_BUF(hnum, buf)                 _htole_bufn((hnum), (buf), (UINT16)sizeof(hnum))
+#define H2BE_BUF(hnum, buf)                 _htobe_bufn((hnum), (buf), (UINT16)sizeof(hnum))
+
+/* UINT8 BE/LE buffer to Host Unsigned integer type. */
+UINT16 _letoh_bufn(UINT8 *buf, void *hnum, UINT16 nbytes);
+UINT16 _betoh_bufn(UINT8 *buf, void *hnum, UINT16 nbytes);
+
+#define LE2H_BUFN(buf, hnum, nbytes)        _letoh_bufn((buf), &(hnum), (UINT16)(nbytes))
+#define BE2H_BUFN(buf, hnum, nbytes)        _betoh_bufn((buf), &(hnum), (UINT16)(nbytes))
+
+#define LE2H_BUF(buf, hnum)                 _letoh_bufn((buf), &(hnum), (UINT16)sizeof(hnum))
+#define BE2H_BUF(buf, hnum)                 _betoh_bufn((buf), &(hnum), (UINT16)sizeof(hnum))
+
+
 /* Macro to calculate the length of arrays irrespective of their types. */
 #define LEN_OF_ARRAY(array)                 (sizeof((array))/sizeof((array)[0]))
 
