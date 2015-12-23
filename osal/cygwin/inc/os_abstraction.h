@@ -155,6 +155,13 @@ void pltfm_usleep(IN UINT32 );
 */
 #define pltfm_usleep(usec)                  (void)usleep((useconds_t)(usec))
 
+
+/* 
+ * POSIX compliant. Not part of standard C. 
+ */
+int clock_getres(clockid_t clk_id, struct timespec *res);
+int clock_gettime(clockid_t clk_id, struct timespec *tp);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
