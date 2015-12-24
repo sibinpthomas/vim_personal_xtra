@@ -5,7 +5,7 @@ CMPLR_FLAGS_CMN = -Wall -Wextra -Werror -Wno-unused-parameter
 CXXFLAGS = -Wno-unused-variable $(CMPLR_FLAGS_CMN)
 CFLAGS = -ansi -pedantic $(CMPLR_FLAGS_CMN)
 
-PLTFM_ROOT_DIR = ../../../platforms
+PLTFM_ROOT_DIR = ../../osal
 
 PLTFM_INC_DIR = $(PLTFM_ROOT_DIR)/inc
 PLTFM_SRC_DIR = $(PLTFM_ROOT_DIR)/src
@@ -27,13 +27,10 @@ VPATH = ../src:../test:$(LOGGER_SRC_DIR):$(TEST_UTILS_SRC_DIR)\
 INC = -I../inc -I../test \
 	-I$(TEST_UTILS_INC_DIR) -I$(GTEST_INC) \
 	-I$(PLTFM_INC_DIR) -I$(OSAL_INC_DIR)
-DEFINES = -DLOGGER -DLOG_TO_STDOUT -DLOGGER_LEVEL=6
+# DEFINES = -DLOGGER -DLOG_TO_STDOUT -DLOGGER_LEVEL=6
 
 # Platform files
 PLTFM_FILES = pltfm_auxiliary.c
-
-# Test Files Common
-TF_CMN = test_utils.c
 
 
 # Rules to generate dependency files
@@ -68,16 +65,13 @@ cscope_test:
 #-------------------------------------------
 # Module under Test - Logger
 #-------------------------------------------
-MUT = 
+MUT = logger.c
 # Test Files with testcases
 TF_TC = logger_tests.cpp
 # Modules the MUT is dependent on
 MUT_DPD = 
-ifeq ($(findstring -DLOGGER, $(DEFINES)), -DLOGGER)
-	MUT_DPD += logger.c
-endif
 
-SOURCES = $(MUT) $(MUT_DPD) $(PLTFM_FILES) $(TF_TC) $(TF_CMN)
+SOURCES = $(MUT) $(MUT_DPD) $(PLTFM_FILES) $(TF_TC)
 OBJECTS = $(SOURCES:.cpp=.o)
 OBJECTS := $(OBJECTS:.c=.o)
 
