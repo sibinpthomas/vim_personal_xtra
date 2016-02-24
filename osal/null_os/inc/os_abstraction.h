@@ -12,7 +12,7 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#include "null_thread.h"
+#include "null_os.h"
 #include "generic_type_abstraction.h"
 
 /* Datatype to represent Thread or Task Identifier*/
@@ -81,7 +81,7 @@ INT32 pltfm_thread_attr_destroy(IN pltfm_thread_attr_t*);
 /*
 INT32 pltfm_thread_yield(void);
 */
-#define pltfm_thread_yield()                ((INT32)null_thread_yield()
+#define pltfm_thread_yield()                ((INT32)null_thread_yield())
 
 
 /* 
@@ -143,21 +143,21 @@ INT32 pltfm_cond_signal(INOUT pltfm_cond_t* );
 
 void pltfm_sleep (IN UINT32 );
 */
-#define pltfm_sleep(sec)                    (void)sleep((unsigned int)(sec))
+#define pltfm_sleep(sec)                    null_sleep(sec)
 
 /*
  * Time in milli-seconds.
 
 void pltfm_msleep(IN UINT32 );
 */
-#define pltfm_msleep(msec)                  (void)usleep((useconds_t)(1000 * (msec)))
+#define pltfm_msleep(msec)                  null_msleep(msec)
 
 /*
  * Time in micro-seconds.
 
 void pltfm_usleep(IN UINT32 );
 */
-#define pltfm_usleep(usec)                  (void)usleep((useconds_t)(usec))
+#define pltfm_usleep(usec)                  null_usleep(usec)
 
 #ifdef __cplusplus
 }

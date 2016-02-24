@@ -2,8 +2,8 @@
  * Abstractions for shell (empty) Thread handling primitives.
  */
 
-#ifndef _H_OS_ABSTRACTION_
-#define _H_OS_ABSTRACTION_
+#ifndef _H_NULL_OS_
+#define _H_NULL_OS_
 
 #ifdef __cplusplus
 extern "C"
@@ -26,8 +26,12 @@ INT32 null_thread_cond_destroy(INT32* );
 INT32 null_thread_cond_wait(INT32* , INT32* );
 INT32 null_thread_cond_signal(INT32* );
 
+void null_sleep (UINT32 );
+void null_msleep(UINT32 );
+void null_usleep(UINT32 );
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* _H_OS_ABSTRACTION_ */
+#endif /* _H_NULL_OS_ */

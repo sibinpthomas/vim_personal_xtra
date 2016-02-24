@@ -45,12 +45,12 @@ extern "C"
 
 #if UINT_MAX == 65535
     typedef unsigned int                    UINT16;
-    #if ULONG_MAX == 4294967295LL
+    #if ULONG_MAX == 4294967295L
         typedef unsigned long               UINT32;
     #else /* ULONG_MAX */
         #error "ULONG_MAX does not perfectly define a 32 bit type."
     #endif /* ULONG_MAX */
-#elif UINT_MAX == 4294967295LL
+#elif UINT_MAX == 4294967295L
     typedef unsigned int                    UINT32;
     #if USHRT_MAX == 65535
         typedef unsigned short              UINT16;
