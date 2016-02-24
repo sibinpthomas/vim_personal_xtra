@@ -80,6 +80,11 @@ INT32 pltfm_thread_attr_destroy(IN pltfm_thread_attr_t*);
 */
 #define pltfm_thread_attr_destroy(t_at)     ((INT32)pthread_attr_destroy((pltfm_thread_attr_t)(t_at)))
 
+/*
+INT32 pltfm_thread_yield(void);
+*/
+#define pltfm_thread_yield()                ((INT32)pthread_yield())
+
 
 /* 
  * Task/Thread Synchronization Primitives

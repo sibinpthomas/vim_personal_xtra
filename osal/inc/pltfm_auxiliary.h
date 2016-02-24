@@ -117,7 +117,6 @@ UINT16 _betoh_bufn(UINT8 *buf, void *hnum, UINT16 nbytes);
 #define DECL_CONST                          const
 #endif /* PLTFM_NO_CONST_DECL */
 
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
