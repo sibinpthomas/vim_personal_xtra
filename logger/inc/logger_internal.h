@@ -1,3 +1,5 @@
+#ifndef _H_LOGGER_INTERNAL_
+#define _H_LOGGER_INTERNAL_
 
 #ifdef __cplusplus
 extern "C"
@@ -16,3 +18,5 @@ extern "C"
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
+
+#endif /* _H_LOGGER_INTERNAL_ */

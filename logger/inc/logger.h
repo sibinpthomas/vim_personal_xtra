@@ -1,3 +1,5 @@
+#ifndef _H_LOGGER_
+#define _H_LOGGER_
 
 #ifdef __cplusplus
 extern "C"
@@ -5,8 +7,9 @@ extern "C"
 #endif /* __cplusplus */
 
 #define LOGGER
-#define LOGGER_LEVEL                        0    
-#define LOG_TO_STDOUT
+#ifndef LOGGER_LEVEL
+    #define LOGGER_LEVEL                        0    
+#endif /* LOGGER_LEVEL */
 
 #include "logger_internal.h"
 
@@ -107,3 +110,5 @@ extern "C"
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
+
+#endif /* _H_LOGGER_ */
