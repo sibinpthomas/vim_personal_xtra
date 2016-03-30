@@ -37,6 +37,15 @@ CTRL-b  CTRL-f              : Scroll backwards (upwards), Scroll forward (downwa
                             : Prepend path to relative file names in pre-built cross-ref file.
                             : In this case prepending the parent of the directory of the current file.
 
+let g:pymode_options_max_line_length=99
+let g:pymode_lint_options_pylint={'max-line-length': 80}
+let g:pymode_lint_options_pep8={'max_line_length': 99}
+                            : Change max line length for PyMode Pep8 checker in case the default value (80) 
+                            : is too short.
+                            : The first 2 config changes didn't seem to affect the warnings generated.
+
+:PymodeLintToggle
+                            : To enable/disable auto Lint check every time the file is saved.
 
 "----------------------------------------
 /joe/e                      : cursor set to End of match
