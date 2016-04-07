@@ -23,7 +23,7 @@ typedef UINT16                              API_RESULT;
 
 #ifndef BOOLEAN
 /* Definition of BOOLEAN */
-typedef UINT8                               BOOLEAN;
+typedef int                                 BOOLEAN;
 #endif /* BOOLEAN */
 
 
@@ -46,12 +46,12 @@ typedef UINT8                               BOOLEAN;
  */
 #ifndef BOOL_TRUE
 /* Definition of BOOL_TRUE */
-#define BOOL_TRUE                           ((BOOLEAN)1u)
+#define BOOL_TRUE                           ((BOOLEAN)(1==1))
 #endif /* BOOL_TRUE */
 
 #ifndef BOOL_FALSE
 /* Definition of BOOL_FALSE */
-#define BOOL_FALSE                          ((BOOLEAN)0u)
+#define BOOL_FALSE                          ((BOOLEAN)(1==0))
 #endif /* BOOL_FALSE */
 
 
