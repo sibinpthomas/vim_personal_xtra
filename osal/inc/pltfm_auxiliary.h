@@ -16,15 +16,12 @@ extern "C"
 /* 
  * Special data types.
  */
-#ifndef API_RESULT
+
 /* Definition of API_RESULT */
 typedef UINT16                              API_RESULT;
-#endif /* API_RESULT */
 
-#ifndef BOOLEAN
-/* Definition of BOOLEAN */
-typedef int                                 BOOLEAN;
-#endif /* BOOLEAN */
+/* Definition of BOOL_T */
+typedef int                                 BOOL_T;
 
 
 /* 
@@ -42,16 +39,16 @@ typedef int                                 BOOLEAN;
 
 
 /* 
- * BOOLEAN type constants.
+ * BOOL_T type constants.
  */
 #ifndef BOOL_TRUE
 /* Definition of BOOL_TRUE */
-#define BOOL_TRUE                           ((BOOLEAN)(1==1))
+#define BOOL_TRUE                           ((BOOL_T)(1==1))
 #endif /* BOOL_TRUE */
 
 #ifndef BOOL_FALSE
 /* Definition of BOOL_FALSE */
-#define BOOL_FALSE                          ((BOOLEAN)(1==0))
+#define BOOL_FALSE                          ((BOOL_T)(1==0))
 #endif /* BOOL_FALSE */
 
 
@@ -60,6 +57,8 @@ typedef int                                 BOOLEAN;
 #define EXTRACT_BITNUM(val, bitnum)         (((val) >> (bitnum)) & 1)
 #define SET_BITNUM(val, bitnum)             ((val) |= (1 << (bitnum)))
 #define CLR_BITNUM(val, bitnum)             ((val) &= (~(1 << (bitnum))))
+#define IS_BITNUM_SET(val, bitnum)          (EXTRACT_BITNUM((val), (bitnum)) == 1)
+#define IS_BITNUM_CLR(val, bitnum)          (EXTRACT_BITNUM((val), (bitnum)) == 0)
 
 
 /* Host Unsigned integer type to UINT8 BE/LE buffer. */
@@ -116,6 +115,61 @@ UINT16 _betoh_bufn(UINT8 *buf, void *hnum, UINT16 nbytes);
 #else  /* PLTFM_NO_CONST_DECL */
 #define DECL_CONST                          const
 #endif /* PLTFM_NO_CONST_DECL */
+
+/* Mutex/Cond Var operations */
+#define RETURN_VOID
+
+#define PLTFM_MUTEX_INIT(mutex, MODULE, errval)\
+    if (pltfm_mutex_init(&(mutex), NULL) != 0)\
+    {\
+        MODULE##_ERR(("Failed to initialize " #MODULE " module level mutex.\n"));\
+        return errval;\
+    }
+#define PLTFM_MUTEX_DESTROY(mutex, MODULE, errval)\
+    if (pltfm_mutex_destroy(&(mutex)) != 0)\
+    {\
+        MODULE##_ERR(("Failed to destroy " #MODULE " module level mutex.\n"));\
+        MODULE##_ERR((strerror(pltfm_mutex_destroy(&(mutex)))));\
+        return errval;\
+    }
+#define PLTFM_MUTEX_LOCK(mutex, MODULE, errval)\
+    if (pltfm_mutex_lock(&(mutex)) != 0)\
+    {\
+        MODULE##_ERR(("Failed to lock " #MODULE " module level mutex.\n"));\
+        MODULE##_ERR(("%s\n", strerror(pltfm_mutex_lock(&(mutex)))));\
+        return errval;\
+    }
+#define PLTFM_MUTEX_UNLOCK(mutex, MODULE, errval)\
+    if (pltfm_mutex_unlock(&(mutex)) != 0)\
+    {\
+        MODULE##_ERR(("Failed to unlock " #MODULE " module level mutex.\n"));\
+        MODULE##_ERR((strerror(pltfm_mutex_unlock(&(mutex)))));\
+        return errval;\
+    }
+#define PLTFM_COND_INIT(condv, MODULE, errval)\
+    if (pltfm_cond_init(&(condv), NULL) != 0)\
+    {\
+        MODULE##_ERR(("Failed to initialize " #MODULE " conditional variable.\n"));\
+        return errval;\
+    }
+#define PLTFM_COND_DESTROY(condv, MODULE, errval)\
+    if (pltfm_cond_destroy(&(condv)) != 0)\
+    {\
+        MODULE##_ERR(("Failed to destroy " #MODULE " conditional variable.\n"));\
+        return errval;\
+    }
+#define PLTFM_COND_SIGNAL(condv, MODULE, errval)\
+    if (pltfm_cond_signal(&(condv)) != 0)\
+    {\
+        MODULE##_ERR(("Failed to signal " #MODULE " conditional variable.\n"));\
+        return errval;\
+    }
+#define PLTFM_COND_WAIT(condv, cond_mutex, MODULE, errval)\
+    if (pltfm_cond_wait(&(condv), &(cond_mutex)) != 0)\
+    {\
+        MODULE##_ERR(("Failed to wait on " #MODULE " conditional variable.\n"));\
+        return errval;\
+    }
 
 #ifdef __cplusplus
 }
