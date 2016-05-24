@@ -61,6 +61,10 @@ typedef int                                 BOOL_T;
 #define IS_BITNUM_CLR(val, bitnum)          (EXTRACT_BITNUM((val), (bitnum)) == 0)
 
 
+/* Strips the characters Space, Horizontal Tab, CR, LF from both ends of
+ * the input string. */
+CHAR* pltfm_strstrip(CHAR* );
+
 /* Host Unsigned integer type to UINT8 BE/LE buffer. */
 UINT16 _htole_bufn(UINTMAX hnum, UINT8 *buf, UINT16 nbytes);
 UINT16 _htobe_bufn(UINTMAX hnum, UINT8 *buf, UINT16 nbytes);

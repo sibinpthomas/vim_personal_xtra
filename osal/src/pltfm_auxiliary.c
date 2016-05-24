@@ -125,3 +125,46 @@ UINT16 _betoh_bufn(UINT8 *buf, void *hnum, UINT16 nbytes)
 
     return (API_SUCCESS == assign_2h(hnum, tmp_h, nbytes)) ? nbytes : 0;
 }
+
+/* Strips the characters Space, Horizontal Tab, CR, LF from both ends of
+ * the input string.
+ * There is an expectation that the string passed isn't read-only since this
+ * function writes to it. */
+CHAR* pltfm_strstrip(CHAR* s)
+{
+    CHAR* ss = NULL;
+    UINT32 len;
+
+    if (NULL == s)
+    {
+        return NULL;
+    }
+
+    /* Find first non-whitespace character going forward. */
+    while (('\n' == *(s)) || ('\r' == *(s)) ||
+            (' ' == *(s)) || ('\t' == *(s)))
+    {
+        ++s;
+    }
+    /* Mark beginning of stripped string. */
+    ss = s;
+
+    len = pltfm_strlen(ss);
+    if (0 == len)
+    {
+        return ss; /* Return if the string has no meat. */
+    }
+    s = ss + len-1;
+
+    /* Find first non-whitespace character going backward. */
+    while ((s > ss) &&
+           (('\n' == *(s)) || ('\r' == *(s)) ||
+            (' ' == *(s)) || ('\t' == *(s))))
+    {
+        --s;
+    }
+    /* Mark end of stripped string. */
+    *(s+1) = '\0';
+
+    return ss;
+}
