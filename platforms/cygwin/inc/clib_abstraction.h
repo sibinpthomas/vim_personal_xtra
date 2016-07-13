@@ -19,6 +19,7 @@ extern "C"
 #include <math.h>
 #include <float.h>
 #include <assert.h>
+#include <errno.h>
 
 /* Abstractions for functions testing and mapping characters. */
 #define pltfm_isalnum(c)                    isalnum((int)(c))

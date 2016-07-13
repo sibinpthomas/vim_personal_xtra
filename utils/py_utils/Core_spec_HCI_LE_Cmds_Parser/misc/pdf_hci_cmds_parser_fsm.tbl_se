@@ -1,0 +1,56 @@
+
+* Ignores all lines until first occurence of "^\c\s*State\s*\\\s*Event".
+* First column shall not begin with the column separator character.
+* Final column shall not be bounded by the column separator character (refers
+    especially to the Table's column heading line).
+* Refer "FSM_spec_table_ABNF.md" for ABNF definition of FSM table specification 
+    components.
+
+State\Event      | State_Entry | State_Exit |       Ev_New_Line                      |      Ev_EOF              
+CMD_HEADING      |     -       |     -      | is_cmd_heading(),                      | gen_hci_cmds_meta_data(),
+                 |             |            |   [False : ,                           |   EXIT
+                 |             |            |    Error : ERROR,                      |
+                 |             |            |    True : SUMMARY_TBL]                 |
+SUMMARY_TBL      |     -       |     -      | is_smmry_tbl_hdr(),                    | gen_hci_cmds_meta_data(),
+                 |             |            |   [False : ,                           |   EXIT
+                 |             |            |    Error : ERROR,                      |
+                 |             |            |    True : SUMMARY_TBL_SUB]             |
+SUMMARY_TBL_SUB  |     -       |     Y      | is_tbl_row_desc_hdr(),                 | gen_hci_cmds_meta_data(),
+                 |             |            |   [False : ,                           |   EXIT
+                 |             |            |    Tbl_Row : ,                         |
+                 |             |            |    Error : ERROR,                      |
+                 |             |            |    Desc_Hdr : DESCRIPTION]             |
+DESCRIPTION      |     -       |     -      | is_desc_cmd_prms_hdr(),                | gen_hci_cmds_meta_data(),
+                 |             |            |   [False : ,                           |   EXIT
+                 |             |            |    Desc : ,                            |
+                 |             |            |    Error : ERROR,                      |
+                 |             |            |    Cmd_Prms_Hdr : CMD_PARAMS]          |
+CMD_PARAMS       |     -       |     -      | is_cmd_prm_hdr_ret_prms_hdr(),         | gen_hci_cmds_meta_data(),
+                 |             |            |   [False : ,                           |   EXIT
+                 |             |            |    Error : ERROR,                      |
+                 |             |            |    Ret_Prms_Hdr : RET_PARAMS,          |
+                 |             |            |    Cmd_Prm_Hdr : CMD_PARAM_VALUE]      |
+CMD_PARAM_VALUE  |     -       |     Y      | is_prm_val_cmd_prm_hdr_ret_prms_hdr(), | gen_hci_cmds_meta_data(),
+                 |             |            |   [False : ,                           |   EXIT
+                 |             |            |    Prm_Val : ,                         |
+                 |             |            |    Cmd_Prm_Hdr : ,                     |
+                 |             |            |    Error : ERROR,                      |
+                 |             |            |    Ret_Prms_Hdr : RET_PARAMS]          |
+RET_PARAMS       |     -       |     -      | is_ret_prm_hdr_gen_evts(),             | gen_hci_cmds_meta_data(),
+                 |             |            |   [False : ,                           |   EXIT
+                 |             |            |    Error : ERROR,                      |
+                 |             |            |    Gen_Evts : GEN_EVENTS,              |
+                 |             |            |    Ret_Prm_Hdr : RET_PARAM_VALUE]      |
+RET_PARAM_VALUE  |     -       |     Y      | is_prm_val_ret_prm_hdr_gen_evts(),     | gen_hci_cmds_meta_data(),
+                 |             |            |   [False : ,                           |   EXIT
+                 |             |            |    Prm_Val : ,                         |
+                 |             |            |    Ret_Prm_Hdr : ,                     |
+                 |             |            |    Error : ERROR,                      |
+                 |             |            |    Gen_Evts : GEN_EVENTS]              |
+GEN_EVENTS       |     -       |     Y      | is_gen_evts_cmd_hdr(),                 | gen_hci_cmds_meta_data(),
+                 |             |            |   [False : ,                           |   EXIT
+                 |             |            |    Gen_Evts : ,                        |
+                 |             |            |    Error : ERROR,                      |
+                 |             |            |    Cmd_Hdr : SUMMARY_TBL]              |
+ERROR            |     Y       |     -      |                                        |                          
+EXIT             |     Y       |     -      |                                        |                          

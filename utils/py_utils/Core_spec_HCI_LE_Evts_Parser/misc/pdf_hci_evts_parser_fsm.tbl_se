@@ -1,0 +1,45 @@
+
+* Ignores all lines until first occurence of "^\c\s*State\s*\\\s*Event".
+* First column shall not begin with the column separator character.
+* Final column shall not be bounded by the column separator character (refers
+    especially to the Table's column heading line).
+* Refer "FSM_spec_table_ABNF.md" for ABNF definition of FSM table specification 
+    components.
+
+State\Event       | State_Entry | State_Exit |       Ev_New_Line                      |      Ev_EOF              
+EVT_HEADING       |     -       |     -      | is_evt_heading(),                      | gen_hci_evts_meta_data(),
+                  |             |            |   [False : ,                           |   EXIT
+                  |             |            |    Error : ERROR,                      |
+                  |             |            |    True : SUMMARY_TBL]                 |
+SUMMARY_TBL       |     -       |     -      | is_smmry_tbl_hdr(),                    | gen_hci_evts_meta_data(),
+                  |             |            |   [False : ,                           |   EXIT
+                  |             |            |    Error : ERROR,                      |
+                  |             |            |    True : SUMMARY_TBL_SUB]             |
+SUMMARY_TBL_SUB   |     -       |     Y      | is_tbl_row_desc_hdr(),                 | gen_hci_evts_meta_data(),
+                  |             |            |   [False : ,                           |   EXIT
+                  |             |            |    Tbl_Row : ,                         |
+                  |             |            |    Error : ERROR,                      |
+                  |             |            |    Desc_Hdr : DESCRIPTION]             |
+DESCRIPTION       |     -       |     -      | is_desc_evt_prms_hdr(),                | gen_hci_evts_meta_data(),
+                  |             |            |   [False : ,                           |   EXIT
+                  |             |            |    Desc : ,                            |
+                  |             |            |    Error : ERROR,                      |
+                  |             |            |    Evt_Prms_Hdr : EVT_PARAMS]          |
+EVT_PARAMS        |     -       |     -      | is_evt_prm_hdr_evt_heading(),          | gen_hci_evts_meta_data(),
+                  |             |            |   [False : ,                           |   EXIT
+                  |             |            |    Error : ERROR,                      |
+                  |             |            |    Subevent_Code : SUBEVENT_CODE_VAL,  |
+                  |             |            |    Event_Heading : SUMMARY_TBL,        |
+                  |             |            |    Evt_Prm_Hdr : EVT_PARAM_VALUE]      |
+SUBEVENT_CODE_VAL |     -       |     -      | is_subevent_code(),                    | gen_hci_evts_meta_data(),
+                  |             |            |   [False : ,                           |   EXIT
+                  |             |            |    Error : ERROR,                      |
+                  |             |            |    True : EVT_PARAMS]                  |
+EVT_PARAM_VALUE   |     -       |     Y      | is_prm_val_evt_prm_hdr_evt_heading(),  | gen_hci_evts_meta_data(),
+                  |             |            |   [False : ,                           |   EXIT
+                  |             |            |    Prm_Val : ,                         |
+                  |             |            |    Evt_Prm_Hdr : ,                     |
+                  |             |            |    Error : ERROR,                      |
+                  |             |            |    Event_Heading : SUMMARY_TBL]        |
+ERROR             |     Y       |     -      |                                        |                          
+EXIT              |     Y       |     -      |                                        |                          

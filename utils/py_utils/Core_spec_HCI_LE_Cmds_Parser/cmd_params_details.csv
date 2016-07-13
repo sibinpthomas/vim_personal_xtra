@@ -1,0 +1,255 @@
+0x0001|     HCI_LE_Set_Event_Mask
+              LE_Event_Mask|    8| verify_le_set_event_mask| 0x1F 0x00 0x00 0x00 0x00 0x00 0x00 0x00| 0x0000000000000000 to 0x00000000000007FF| 
+
+0x0002|   HCI_LE_Read_Buffer_Size
+
+0x0003| HCI_LE_Read_Local_Supported_Features
+
+0x0005| HCI_LE_Set_Random_Address
+             Random_Address|    6| verify_dev_addr| 0xA0 0xB0 0xC0 0xD0 0xE0 0xF0| Random Device Address| 
+             # Default value for Random_Address not mentioned in spec, decided by me.
+             # Random Static Address (MSB is 11b).
+
+0x0006| HCI_LE_Set_Advertising_Parameters
+   Advertising_Interval_Min|    2| 0x0020 to 0x4000| 0x0800| | 
+   Advertising_Interval_Max|    2| 0x0020 to 0x4000| 0x0800| | 
+           Advertising_Type|    1| 0x00 to 0x04| 0x00| | 
+           Own_Address_Type|    1| 0x00 to 0x03| 0x00| | 
+          Peer_Address_Type|    1| 0x00 to 0x01| 0x00| | 
+               Peer_Address|    6| verify_dev_addr| 0xA0 0xB0 0xC0 0xD0 0xE0 0xF0| Public Device Address, Random Device Address, Public Identity Address, or Random (static) Identity Address of the device to be connected| 
+               # Default value for Peer_Address not mentioned in spec, decided by me.
+               # Random Static Address (MSB is 11b).
+    Advertising_Channel_Map|    1| 0x01 to 0x07| 0x07| | 
+  Advertising_Filter_Policy|    1| 0x00 to 0x03| 0x00| | 
+
+0x0007| HCI_LE_Read_Advertising_Channel_Tx_Power
+
+0x0008| HCI_LE_Set_Advertising_Data
+    Advertising_Data_Length|    1| 0x00 to 0x1F| 0x1F| | 
+    # Default value for Advertising_Data_Length not mentioned in spec, decided by me.
+           Advertising_Data|   31| | 0x1E 0x09 0x53 0x69 0x62 0x69 0x6E 0x20 0x50 0x2E 0x20 0x54 0x68 0x6F 0x6D 0x61 0x73 0x20 0x53 0x69 0x62 0x69 0x6E 0x20 0x54 0x68 0x6F 0x6D 0x61 0x73 0x2E| | 
+           # Default value for Advertising_Data not mentioned in spec, decided by me.
+           # AD Type - Complete Local Name; "Sibin P. Thomas Sibin Thomas."
+
+0x0009| HCI_LE_Set_Scan_Response_Data
+  Scan_Response_Data_Length|    1| 0x00 to 0x1F| 0x1F| | 
+  # Default value for Scan_Response_Data_Length not mentioned in spec, decided by me.
+         Scan_Response_Data|   31| | 0x1E 0x09 0x53 0x69 0x62 0x69 0x6E 0x20 0x50 0x2E 0x20 0x54 0x68 0x6F 0x6D 0x61 0x73 0x20 0x53 0x69 0x62 0x69 0x6E 0x20 0x54 0x68 0x6F 0x6D 0x61 0x73 0x2E| | 
+         # Default value for Scan_Response_Data not mentioned in spec, decided by me.
+         # AD Type - Complete Local Name; "Sibin P. Thomas Sibin Thomas."
+
+0x000A| HCI_LE_Set_Advertise_Enable
+         Advertising_Enable|    1| 0x00 to 0x01| 0x00| | 
+
+0x000B| HCI_LE_Set_Scan_Parameters
+               LE_Scan_Type|    1| 0x00 to 0x01| 0x00| | 
+           LE_Scan_Interval|    2| 0x0004 to 0x4000| 0x0010| | 
+             LE_Scan_Window|    2| 0x0004 to 0x4000| 0x0010| | 
+           Own_Address_Type|    1| 0x00 to 0x03| 0x00| | 
+     Scanning_Filter_Policy|    1| 0x00 to 0x03| 0x00| | 
+
+0x000C|    HCI_LE_Set_Scan_Enable
+             LE_Scan_Enable|    1| 0x00 to 0x01| 0x01| | 
+             # Default value for LE_Scan_Enable not mentioned in spec, decided by me.
+          Filter_Duplicates|    1| 0x00 to 0x01| 0x01| | 
+          # Default value for Filter_Duplicates not mentioned in spec, decided by me.
+
+0x000D|  HCI_LE_Create_Connection
+           LE_Scan_Interval|    2| 0x0004 to 0x4000| 0x0010| | 
+           # Default value for LE_Scan_Interval not mentioned in spec, decided by me.
+             LE_Scan_Window|    2| 0x0004 to 0x4000| 0x0010| | 
+             # Default value for LE_Scan_Window not mentioned in spec, decided by me.
+    Initiator_Filter_Policy|    1| 0x00 to 0x01| 0x00| | 
+    # Default value for Initiator_Filter_Policy not mentioned in spec, decided by me.
+          Peer_Address_Type|    1| 0x00 to 0x03| 0x01| | 
+          # Default value for Peer_Address_Type not mentioned in spec, decided by me.
+               Peer_Address|    6| verify_dev_addr| 0xA0 0xB0 0xC0 0xD0 0xE0 0xF0| Public Device Address, Random Device Address, Public Identity Address, or Random (static) Identity Address of the device to be connected| 
+               # Default value for Peer_Address not mentioned in spec, decided by me.
+               # Random Static Address (MSB is 11b).
+           Own_Address_Type|    1| 0x00 to 0x03| 0x01| | 
+           # Default value for Own_Address_Type not mentioned in spec, decided by me.
+          Conn_Interval_Min|    2| 0x0006 to 0x0C80| 0x0080| | 
+          # Default value for Conn_Interval_Min not mentioned in spec, decided by me.
+          Conn_Interval_Max|    2| 0x0006 to 0x0C80| 0x0080| | 
+          # Default value for Conn_Interval_Max not mentioned in spec, decided by me.
+               Conn_Latency|    2| 0x0000 to 0x01F3| 0x0005| | 
+               # Default value for Conn_Latency not mentioned in spec, decided by me.
+        Supervision_Timeout|    2| 0x000A to 0x0C80| 0x0064| | 
+        # Default value for Supervision_Timeout not mentioned in spec, decided by me.
+          Minimum_CE_Length|    2| | 0x000A| | 
+          # Default value for Minimum_CE_Length not mentioned in spec, decided by me.
+          Maximum_CE_Length|    2| | 0x000A| | 
+          # Default value for Maximum_CE_Length not mentioned in spec, decided by me.
+
+0x000E| HCI_LE_Create_Connection_Cancel
+
+0x000F| HCI_LE_Read_White_List_Size
+
+0x0010|   HCI_LE_Clear_White_List
+
+0x0011| HCI_LE_Add_Device_To_White_List
+               Address_Type|    1| 0x00 to 0x01| 0x01| | 
+               # Default value for Address_Type not mentioned in spec, decided by me.
+                    Address|    6| verify_dev_addr| 0xA0 0xB0 0xC0 0xD0 0xE0 0xF0| Public Device Address or Random Device Address of the device to be added to the white list| 
+                    # Default value for Address not mentioned in spec, decided by me.
+                    # Random Static Address (MSB is 11b).
+
+0x0012| HCI_LE_Remove_Device_From_White_List
+               Address_Type|    1| 0x00 to 0x01| 0x01| | 
+               # Default value for Address_Type not mentioned in spec, decided by me.
+                    Address|    6| verify_dev_addr| 0xA0 0xB0 0xC0 0xD0 0xE0 0xF0| Public Device Address or Random Device Address of the device to be removed to the white list| 
+                    # Default value for Address not mentioned in spec, decided by me.
+                    # Random Static Address (MSB is 11b).
+
+0x0013|  HCI_LE_Connection_Update
+          Connection_Handle|    2| 0x0000 to 0x0EFF| 0x0000| | 
+          # Default value for Connection_Handle not mentioned in spec, decided by me.
+          Conn_Interval_Min|    2| 0x0006 to 0x0C80| 0x0080| | 
+          # Default value for Conn_Interval_Min not mentioned in spec, decided by me.
+          Conn_Interval_Max|    2| 0x0006 to 0x0C80| 0x0080| | 
+          # Default value for Conn_Interval_Max not mentioned in spec, decided by me.
+               Conn_Latency|    2| 0x0000 to 0x01F3| 0x0005| | 
+               # Default value for Conn_Latency not mentioned in spec, decided by me.
+        Supervision_Timeout|    2| 0x000A to 0x0C80| 0x0064| | 
+        # Default value for Supervision_Timeout not mentioned in spec, decided by me.
+          Minimum_CE_Length|    2| | 0x000A| | 
+          # Default value for Minimum_CE_Length not mentioned in spec, decided by me.
+          Maximum_CE_Length|    2| | 0x000A| | 
+          # Default value for Maximum_CE_Length not mentioned in spec, decided by me.
+
+0x0014| HCI_LE_Set_Host_Channel_Classification
+                Channel_Map|    5| verify_channel_map| 0xFF 0xFF 0xFF 0xFF 0x1F| 0x0000000001 to 0x1FFFFFFFFF| 
+                # Default value for Channel_Map not mentioned in spec, decided by me.
+
+0x0015|   HCI_LE_Read_Channel_Map
+          Connection_Handle|    2| 0x0000 to 0x0EFF| 0x0000| | 
+          # Default value for Connection_Handle not mentioned in spec, decided by me.
+
+0x0016| HCI_LE_Read_Remote_Used_Features
+          Connection_Handle|    2| 0x0000 to 0x0EFF| 0x0000| | 
+          # Default value for Connection_Handle not mentioned in spec, decided by me.
+
+0x0017|            HCI_LE_Encrypt
+                        Key|   16| | | | 
+             Plaintext_Data|   16| | | | 
+
+0x0018|               HCI_LE_Rand
+
+0x0019|   HCI_LE_Start_Encryption
+          Connection_Handle|    2| 0x0000 to 0x0EFF| 0x0000| | 
+          # Default value for Connection_Handle not mentioned in spec, decided by me.
+              Random_Number|    8| | 0xA5 0xFE 0xEF 0x5A 0xA5 0xFE 0xEF 0x5A| | 
+      Encrypted_Diversifier|    2| | 0xBEEF| | 
+      # Default value for Connection_Handle not mentioned in spec, decided by me.
+              Long_Term_Key|   16| | | | 
+
+0x001A| HCI_LE_Long_Term_Key_Request_Reply
+          Connection_Handle|    2| 0x0000 to 0x0EFF| 0x0000| | 
+          # Default value for Connection_Handle not mentioned in spec, decided by me.
+              Long_Term_Key|   16| | | | 
+
+0x001B| HCI_LE_Long_Term_Key_Request_Negative_Reply
+          Connection_Handle|    2| 0x0000 to 0x0EFF| 0x0000| | 
+          # Default value for Connection_Handle not mentioned in spec, decided by me.
+
+0x001C| HCI_LE_Read_Supported_States
+
+0x001D|      HCI_LE_Receiver_Test
+                 RX_Channel|    1| 0x00 to 0x27| 0x03| | 
+                 # Default value for RX_Channel not mentioned in spec, decided by me.
+
+0x001E|   HCI_LE_Transmitter_Test
+                 TX_Channel|    1| 0x00 to 0x27| 0x03| | 
+                 # Default value for TX_Channel not mentioned in spec, decided by me.
+        Length_Of_Test_Data|    1| | 0x7F| | 
+        # Default value for Length_Of_Test_Data not mentioned in spec, decided by me.
+             Packet_Payload|    1| 0x00 to 0x07| 0x02| | 
+             # Default value for Packet_Payload not mentioned in spec, decided by me.
+
+0x001F|           HCI_LE_Test_End
+
+0x0020| HCI_LE_Remote_Connection_Parameter_Request_Reply
+          Connection_Handle|    2| 0x0000 to 0x0EFF| 0x0000| | 
+          # Default value for Connection_Handle not mentioned in spec, decided by me.
+          Conn_Interval_Min|    2| 0x0006 to 0x0C80| 0x0080| | 
+          # Default value for Conn_Interval_Min not mentioned in spec, decided by me.
+          Conn_Interval_Max|    2| 0x0006 to 0x0C80| 0x0080| | 
+          # Default value for Conn_Interval_Max not mentioned in spec, decided by me.
+               Conn_Latency|    2| 0x0000 to 0x01F3| 0x0005| | 
+               # Default value for Conn_Latency not mentioned in spec, decided by me.
+        Supervision_Timeout|    2| 0x000A to 0x0C80| 0x0064| | 
+        # Default value for Supervision_Timeout not mentioned in spec, decided by me.
+          Minimum_CE_Length|    2| | 0x000A| | 
+          # Default value for Minimum_CE_Length not mentioned in spec, decided by me.
+          Maximum_CE_Length|    2| | 0x000A| | 
+          # Default value for Maximum_CE_Length not mentioned in spec, decided by me.
+
+0x0021| HCI_LE_Remote_Connection_Parameter_Request_Negative_Reply
+          Connection_Handle|    2| 0x0000 to 0x0EFF| 0x0000| | 
+          # Default value for Connection_Handle not mentioned in spec, decided by me.
+                     Reason|    1| 0x01 to 0x40| 0x3B| | 
+                     # Default value for Reason not mentioned in spec, decided by me.
+                     # Needs more deliberation.
+
+0x0022|    HCI_LE_Set_Data_Length
+          Connection_Handle|    2| 0x0000 to 0x0EFF| 0x0000| | 
+          # Default value for Connection_Handle not mentioned in spec, decided by me.
+                   TxOctets|    2| 0x001B to 0x00FB| 0x00FB| | 
+                   # Default value for TxOctets not mentioned in spec, decided by me.
+                     TxTime|    2| 0x0148 to 0x0848| 0x0848| | 
+                     # Default value for TxTime not mentioned in spec, decided by me.
+
+0x0023| HCI_LE_Read_Suggested_Default_Data_Length
+
+0x0024| HCI_LE_Write_Suggested_Default_Data_Length
+       SuggestedMaxTxOctets|    2| 0x001B to 0x00FB| 0x00FB| | 
+                   # Default value for TxOctets not mentioned in spec, decided by me.
+         SuggestedMaxTxTime|    2| 0x0148 to 0x0848| 0x0848| | 
+                     # Default value for TxTime not mentioned in spec, decided by me.
+
+0x0025| HCI_LE_Read_Local_P-256_Public_Key
+
+0x0026|     HCI_LE_Generate_DHKey
+    Remote_P-256_Public_Key|   64| | | | 
+
+0x0027| HCI_LE_Add_Device_To_Resolving_List
+ Peer_Identity_Address_Type|    1| 0x00 to 0x01| 0x01| | 
+ # Default value for Peer_Identity_Address_Type not mentioned in spec, decided by me.
+      Peer_Identity_Address|    6| verify_dev_addr| 0xA0 0xB0 0xC0 0xD0 0xE0 0xF0| Public or Random (static) Identity address of the peer device| 
+      # Default value for Peer_Identity_Address not mentioned in spec, decided by me.
+      # Random Static Address (MSB is 11b).
+                   Peer_IRK|   16| | | | 
+                  Local_IRK|   16| | | | 
+
+0x0028| HCI_LE_Remove_Device_From_Resolving_List
+ Peer_Identity_Address_Type|    1| 0x00 to 0x01| 0x01| | 
+ # Default value for Peer_Identity_Address_Type not mentioned in spec, decided by me.
+      Peer_Identity_Address|    6| verify_dev_addr| 0xA0 0xB0 0xC0 0xD0 0xE0 0xF0| Public or Random (static) Identity address of the peer device| 
+      # Default value for Peer_Identity_Address not mentioned in spec, decided by me.
+      # Random Static Address (MSB is 11b).
+
+0x0029| HCI_LE_Clear_Resolving_List
+
+0x002A| HCI_LE_Read_Resolving_List_Size
+
+0x002B| HCI_LE_Read_Peer_Resolvable_Address
+ Peer_Identity_Address_Type|    1| 0x00 to 0x01| 0x01| | 
+ # Default value for Peer_Identity_Address_Type not mentioned in spec, decided by me.
+      Peer_Identity_Address|    6| verify_dev_addr| 0xA0 0xB0 0xC0 0xD0 0xE0 0xF0| Public or Random (static) Identity address of the peer device| 
+      # Default value for Peer_Identity_Address not mentioned in spec, decided by me.
+      # Random Static Address (MSB is 11b).
+
+0x002C| HCI_LE_Read_Local_Resolvable_Address
+ Peer_Identity_Address_Type|    1| 0x00 to 0x01| 0x01| | 
+ # Default value for Peer_Identity_Address_Type not mentioned in spec, decided by me.
+      Peer_Identity_Address|    6| verify_dev_addr| 0xA0 0xB0 0xC0 0xD0 0xE0 0xF0| Public or Random (static) Identity address of the peer device| 
+      # Default value for Peer_Identity_Address not mentioned in spec, decided by me.
+      # Random Static Address (MSB is 11b).
+
+0x002D| HCI_LE_Set_Address_Resolution_Enable
+  Address_Resolution_Enable|    1| 0x00 to 0x01| 0x00| | 
+
+0x002E| HCI_LE_Set_Resolvable_Private_Address_Timeout
+                RPA_Timeout|    2| 0x0001 to 0xA1B8| 0x0384| | 
+
+0x002F| HCI_LE_Read_Maximum_Data_Length

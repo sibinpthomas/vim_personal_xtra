@@ -1,0 +1,5 @@
+*.txt
+*.sdf
+*.opensdf
+Debug/
+Release/
