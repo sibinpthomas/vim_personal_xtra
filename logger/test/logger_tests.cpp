@@ -49,4 +49,7 @@ TEST_F(Test_get_user_confirmation, t01)
     log_warning(("WARNING\n"));
     log_error(("ERROR\n"));
     log_critical(("CRITICAL\n"));
+    log_temp(("TEMPORARY\n"));
+    log_simple_temp(("SIMPLE TEMPORARY\n"));
+    log_buffer_temp(buf, sizeof(buf));
 }

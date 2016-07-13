@@ -5,7 +5,8 @@ CMPLR_FLAGS_CMN = -Wall -Wextra -Werror -Wno-unused-parameter
 CXXFLAGS = -Wno-unused-variable $(CMPLR_FLAGS_CMN)
 CFLAGS = -ansi -pedantic $(CMPLR_FLAGS_CMN)
 
-PLTFM_ROOT_DIR = ../../osal
+ROOT_DIR = ../..
+PLTFM_ROOT_DIR = $(ROOT_DIR)/osal
 
 PLTFM_INC_DIR = $(PLTFM_ROOT_DIR)/inc
 PLTFM_SRC_DIR = $(PLTFM_ROOT_DIR)/src
@@ -13,19 +14,16 @@ PLTFM_SRC_DIR = $(PLTFM_ROOT_DIR)/src
 OSAL_INC_DIR = $(PLTFM_ROOT_DIR)/cygwin/inc
 OSAL_SRC_DIR = $(PLTFM_ROOT_DIR)/cygwin/src
 
-TEST_UTILS_INC_DIR = ../../../utils/test_utils/inc
-TEST_UTILS_SRC_DIR = ../../../utils/test_utils/src
-
 # Make sure that the GTEST_ROOT environment variable is set correctly.
 GTEST_ROOT := $(subst \,/,$(GTEST_ROOT)) # If the path is of Windows-style convert to POSIX-style
 GTEST_ROOT := $(strip $(GTEST_ROOT))
 GTEST_LIB = $(GTEST_ROOT)/make
 GTEST_INC = $(GTEST_ROOT)/include
 
-VPATH = ../src:../test:$(LOGGER_SRC_DIR):$(TEST_UTILS_SRC_DIR)\
+VPATH = ../src:../test:$(LOGGER_SRC_DIR)\
 	:$(PLTFM_SRC_DIR):$(OSAL_SRC_DIR)
 INC = -I../inc -I../test \
-	-I$(TEST_UTILS_INC_DIR) -I$(GTEST_INC) \
+	-I$(GTEST_INC) \
 	-I$(PLTFM_INC_DIR) -I$(OSAL_INC_DIR)
 # DEFINES = -DLOGGER -DLOG_TO_STDOUT -DLOGGER_LEVEL=6
 
