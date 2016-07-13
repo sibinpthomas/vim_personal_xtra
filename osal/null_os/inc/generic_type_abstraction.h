@@ -15,9 +15,10 @@ extern "C"
  */
 #include <limits.h>
 
-/* Signed and Unsigned 16 and 32 bit integer types.*/
-#if (!defined(INT16) || !defined(INT32) || \
-        !defined(UINT16) || !defined(UINT32))
+
+/* 
+ * Signed and Unsigned 16 and 32 bit integer types.
+ */
 
 /* Checking if implementation limits are defined. */
 #if (!defined(SHRT_MAX) || !defined(INT_MAX) || !defined(LONG_MAX) || \
@@ -61,11 +62,7 @@ extern "C"
     #error "UINT_MAX does not perfectly define a 16 or 32 bit type."
 #endif /* UINT_MAX */
 
-#endif /* INT16, UINT16, INT32, UINT32 */
-
 /* Signed and Unsigned 8 bit integer types.*/
-#if (!defined(INT8) || !defined(UINT8))
-
 #if (!defined(SCHAR_MAX) || !defined(UCHAR_MAX))
     #error "Key implementation limits (char) not defined."
 #endif /* Checking if implementation limits are defined. */
@@ -81,8 +78,6 @@ extern "C"
 #else
     #error "UCHAR_MAX does not perfectly define a 8 bit type."
 #endif /* UCHAR_MAX */
-
-#endif /* INT8, UINT8 */
 
 /*
  * Fast integer types.
@@ -110,15 +105,11 @@ typedef int                                 INT16_F;
 /* 
  * Non-numeric data types 
  */
-#ifndef CHAR
 /* Definition of CHAR */
 typedef char                                CHAR;
-#endif /* CHAR */
 
-#ifndef UCHAR
 /* Definition of UCHAR */
 typedef unsigned char                       UCHAR;
-#endif /* UCHAR */
 
 #ifdef __cplusplus
 }

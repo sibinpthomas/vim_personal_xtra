@@ -21,32 +21,32 @@ extern "C"
 #include <assert.h>
 
 /* Abstractions for functions testing and mapping characters. */
-#define pltfm_isalnum(c)                    ((INT32)isalnum((int)(c)))
-#define pltfm_isalpha(c)                    ((INT32)isalpha((int)(c)))
-#define pltfm_isdigit(c)                    ((INT32)isdigit((int)(c)))
-#define pltfm_isxdigit(c)                   ((INT32)isxdigit((int)(c)))
-#define pltfm_islower(c)                    ((INT32)islower((int)(c)))
-#define pltfm_isupper(c)                    ((INT32)isupper((int)(c)))
-#define pltfm_isprint(c)                    ((INT32)isprint((int)(c)))
-#define pltfm_tolower(c)                    ((INT32)tolower((int)(c)))
-#define pltfm_toupper(c)                    ((INT32)toupper((int)(c)))
+#define pltfm_isalnum(c)                    isalnum((int)(c))
+#define pltfm_isalpha(c)                    isalpha((int)(c))
+#define pltfm_isdigit(c)                    isdigit((int)(c))
+#define pltfm_isxdigit(c)                   isxdigit((int)(c))
+#define pltfm_islower(c)                    islower((int)(c))
+#define pltfm_isupper(c)                    isupper((int)(c))
+#define pltfm_isprint(c)                    isprint((int)(c))
+#define pltfm_tolower(c)                    tolower((int)(c))
+#define pltfm_toupper(c)                    toupper((int)(c))
 
 /* Abstractions for String library functions. */
-#define pltfm_strlen(s)                     ((UINT32)strlen((char *)(s)))
-#define pltfm_strcpy(d, s)                  ((CHAR *)strcpy((char *)(d), (char *)(s)))
-#define pltfm_strncpy(d, s, n)              ((CHAR *)strncpy((char *)(d), (char *)(s), (size_t)(n)))
-#define pltfm_strcmp(s1, s2)                ((INT32)strcmp((char *)(s1), (char *)(s2)))
-#define pltfm_strncmp(s1, s2, n)            ((INT32)strncmp((char *)(s1), (char *)(s2), (size_t)(n)))
-#define pltfm_strcat(d, s)                  ((CHAR *)strcat((char *)(d), (char *)(s)))
-#define pltfm_strncat(d, s, n)              ((CHAR *)strncat((char *)(d), (char *)(s), (size_t)(n)))
-#define pltfm_strchr(s, c)                  ((CHAR *)strchr((char *)(s), (int)(c)))
-#define pltfm_strrchr(s, c)                 ((CHAR *)strrchr((char *)(s), (int)(c)))
-#define pltfm_strstr(s, ss)                 ((CHAR *)strstr((char *)(s), (char *)(ss)))
+#define pltfm_strlen(s)                     strlen((char *)(s))
+#define pltfm_strcpy(d, s)                  strcpy((char *)(d), (char *)(s))
+#define pltfm_strncpy(d, s, n)              strncpy((char *)(d), (char *)(s), (size_t)(n))
+#define pltfm_strcmp(s1, s2)                strcmp((char *)(s1), (char *)(s2))
+#define pltfm_strncmp(s1, s2, n)            strncmp((char *)(s1), (char *)(s2), (size_t)(n))
+#define pltfm_strcat(d, s)                  strcat((char *)(d), (char *)(s))
+#define pltfm_strncat(d, s, n)              strncat((char *)(d), (char *)(s), (size_t)(n))
+#define pltfm_strchr(s, c)                  strchr((char *)(s), (int)(c))
+#define pltfm_strrchr(s, c)                 strrchr((char *)(s), (int)(c))
+#define pltfm_strstr(s, ss)                 strstr((char *)(s), (char *)(ss))
 
 /* Abstractions for Memory manipulation functions. */
 #define pltfm_memchr(b, c, n)               memchr((b), (int)(c), (size_t)(n))
 #define pltfm_memset(b, c, n)               memset((b), (int)(c), (size_t)(n))
-#define pltfm_memcmp(b1, b2, n)             ((INT32)memcmp((b1), (b2), (size_t)(n)))
+#define pltfm_memcmp(b1, b2, n)             memcmp((b1), (b2), (size_t)(n))
 #define pltfm_memcpy(d, s, n)               memcpy((d), (s), (size_t)(n))
 #define pltfm_memmove(d, s, n)              memmove((d), (s), (size_t)(n))
 #define pltfm_malloc(size)                  malloc((size_t)(size))
@@ -55,11 +55,11 @@ extern "C"
 
 /* Abstractions for Random Number Generator functions. */
 #define pltfm_srand(seed)                   srand((unsigned int)(seed))
-#define pltfm_rand()                        ((INT32)rand())
+#define pltfm_rand()                        rand()
 
 /* Safe string functions. */
 #define pltfm_strcpy_s(d, s, d_size)        d[d_size - 1] = '\0';\
-                                            ((CHAR *)strncpy((char *)(d), (char *)(s), (size_t)(d_size - 1)))
+                                            strncpy((char *)(d), (char *)(s), (size_t)(d_size - 1))
 
 #ifdef __cplusplus
 }

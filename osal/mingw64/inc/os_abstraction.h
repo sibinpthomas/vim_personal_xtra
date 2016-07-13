@@ -54,36 +54,36 @@ INT32 pltfm_thread_create(OUT pltfm_thread_t*,
                            IN PLTFM_THREAD_START_ROUTINE,
                            IN pltfm_thread_arg_t);
 */
-#define pltfm_thread_create(t, t_at, sr, t_ar)  ((INT32)pthread_create((pltfm_thread_t*)(t),\
-                                                                       (pltfm_thread_attr_t*)(t_at),\
-                                                                       (PLTFM_THREAD_START_ROUTINE)(sr),\
-                                                                       (pltfm_thread_arg_t)(t_ar)))
+#define pltfm_thread_create(t, t_at, sr, t_ar)  pthread_create((pthread_t*)(t),\
+                                                               (pthread_attr_t*)(t_at),\
+                                                               (void *(*) (void *))(sr),\
+                                                               (void *)(t_ar))
 
 /*
 INT32 pltfm_thread_cancel(IN pltfm_thread_t);
 */
-#define pltfm_thread_cancel(t)              ((INT32)pthread_cancel((pltfm_thread_t)(t)))
+#define pltfm_thread_cancel(t)              pthread_cancel((pthread_t)(t))
 
 /*
 INT32 pltfm_thread_join(IN pltfm_thread_t,
                         OUT void **retval);
 */
-#define pltfm_thread_join(t, retval)        ((INT32)pthread_join((pltfm_thread_t)(t), (retval)))
+#define pltfm_thread_join(t, retval)        pthread_join((pthread_t)(t), (retval))
 
 /*
 INT32 pltfm_thread_attr_init(OUT pltfm_thread_attr_t*);
 */
-#define pltfm_thread_attr_init(t_at)        ((INT32)pthread_attr_init((pltfm_thread_attr_t)(t_at)))
+#define pltfm_thread_attr_init(t_at)        pthread_attr_init((pthread_attr_t)(t_at))
 
 /*
 INT32 pltfm_thread_attr_destroy(IN pltfm_thread_attr_t*);
 */
-#define pltfm_thread_attr_destroy(t_at)     ((INT32)pthread_attr_destroy((pltfm_thread_attr_t)(t_at)))
+#define pltfm_thread_attr_destroy(t_at)     pthread_attr_destroy((pthread_attr_t)(t_at))
 
 /*
 INT32 pltfm_thread_yield(void);
 */
-#define pltfm_thread_yield()                ((INT32)pthread_yield())
+#define pltfm_thread_yield()                pthread_yield()
 
 
 /* 
@@ -93,47 +93,47 @@ INT32 pltfm_thread_yield(void);
 INT32 pltfm_mutex_init(OUT pltfm_mutex_t* ,
                        IN pltfm_mutexattr_t* );
 */
-#define pltfm_mutex_init(m, m_at)           ((INT32)pthread_mutex_init((pltfm_mutex_t*)(m),\
-                                                                       (pltfm_mutexattr_t*)(m_at)))
+#define pltfm_mutex_init(m, m_at)           pthread_mutex_init((pthread_mutex_t*)(m),\
+                                                               (pthread_mutexattr_t*)(m_at))
 
 /*
 INT32 pltfm_mutex_destroy(IN pltfm_mutex_t* );
 */
-#define pltfm_mutex_destroy(m)              ((INT32)pthread_mutex_destroy((pltfm_mutex_t*)(m)))
+#define pltfm_mutex_destroy(m)              pthread_mutex_destroy((pthread_mutex_t*)(m))
 
 /*
 INT32 pltfm_mutex_lock(INOUT pltfm_mutex_t* );
 */
-#define pltfm_mutex_lock(m)                 ((INT32)pthread_mutex_lock((pltfm_mutex_t*)(m)))
+#define pltfm_mutex_lock(m)                 pthread_mutex_lock((pthread_mutex_t*)(m))
 
 /*
 INT32 pltfm_mutex_unlock(INOUT pltfm_mutex_t* );
 */
-#define pltfm_mutex_unlock(m)               ((INT32)pthread_mutex_unlock((pltfm_mutex_t*)(m)))
+#define pltfm_mutex_unlock(m)               pthread_mutex_unlock((pthread_mutex_t*)(m))
 
 /*
 INT32 pltfm_cond_init(OUT pltfm_cond_t* ,
                       IN pltfm_condattr_t* );
 */
-#define pltfm_cond_init(c, c_at)            ((INT32)pthread_cond_init((pltfm_cond_t*)(c),\
-                                                                      (pltfm_condattr_t*)(c_at)))
+#define pltfm_cond_init(c, c_at)            pthread_cond_init((pthread_cond_t*)(c),\
+                                                              (pthread_condattr_t*)(c_at))
 
 /*
 INT32 pltfm_cond_destroy(OUT pltfm_cond_t* );
 */
-#define pltfm_cond_destroy(c)               ((INT32)pthread_cond_destroy((pltfm_cond_t*)(c)))
+#define pltfm_cond_destroy(c)               pthread_cond_destroy((pthread_cond_t*)(c))
 
 /*
 INT32 pltfm_cond_wait(INOUT pltfm_cond_t* ,
                       INOUT pltfm_mutex_t* );
 */
-#define pltfm_cond_wait(c, c_m)             ((INT32)pthread_cond_wait((pltfm_cond_t*)(c),\
-                                                                      (pltfm_mutex_t*)(c_m)))
+#define pltfm_cond_wait(c, c_m)             pthread_cond_wait((pthread_cond_t*)(c),\
+                                                              (pthread_mutex_t*)(c_m))
 
 /*
 INT32 pltfm_cond_signal(INOUT pltfm_cond_t* );
 */
-#define pltfm_cond_signal(c)                ((INT32)pthread_cond_signal((pltfm_cond_t*)(c)))
+#define pltfm_cond_signal(c)                pthread_cond_signal((pthread_cond_t*)(c))
 
 
 /* 
