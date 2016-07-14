@@ -27,6 +27,9 @@
     <ClCompile Include="..\..\..\..\test_utils\src\test_utils.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\platforms\win_vs_2013\src\os_abstraction.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\test_utils\inc\test_utils.h">

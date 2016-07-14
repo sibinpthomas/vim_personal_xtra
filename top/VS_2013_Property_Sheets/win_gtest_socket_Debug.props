@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..\inc;..\..\..\test;$(ROOT_DIR)\top\inc;$(ROOT_DIR)\utils\test_utils\inc;$(ROOT_DIR)\utils\logger\inc;$(ROOT_DIR)\platforms\win_vs_2013\inc;$(ROOT_DIR)\platforms\inc;$(GTEST_ROOT)\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>TEST_ROOT=../..;WINDOWS;_WINSOCKAPI_</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(GTEST_ROOT)\msvc\gtest\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>gtestd.lib;gtest_maind.lib;Ws2_32.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>
