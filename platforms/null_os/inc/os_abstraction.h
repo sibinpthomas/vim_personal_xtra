@@ -17,27 +17,32 @@ extern "C"
 
 /* Datatype to represent Thread or Task Identifier*/
 typedef INT32                               pltfm_thread_t;
-/* Datatype to represent Thread or Task Attribute*/
-typedef INT32                               pltfm_thread_attr_t;
 /* Datatype to represent Mutex object */
 typedef INT32                               pltfm_mutex_t;
-/* Datatype to represent Attributes of a Mutexobject*/
-typedef INT32                               pltfm_mutexattr_t;
 /* Datatype to represent Conditional Variableobject*/
 typedef INT32                               pltfm_cond_t;
-/* Datatype to represent Attributes of a ConditionalVariableobject*/
-typedef INT32                               pltfm_condattr_t;
-/* Datatype to represent the return value of a thread start routine */
-typedef void*                               pltfm_thread_return_t;
-/* Datatype to represent the argument to a thread start routine */
-typedef void*                               pltfm_thread_arg_t;
+/* > Internal - 
+ *          Datatype to represent the return value of a thread start routine */
+typedef void*                               __thread_return_t;
+/* > Internal - 
+ *          Datatype to represent the argument to a thread start routine */
+typedef void*                               __thread_arg_t;
 
-/* Datatype to represent thread start routines */
-typedef pltfm_thread_return_t (*PLTFM_THREAD_START_ROUTINE)(pltfm_thread_arg_t);
+/* > Internal - 
+ *          Datatype to represent thread start routines */
+typedef __thread_return_t (*__THREAD_START_ROUTINE)(__thread_arg_t);
 
-/* Thread return type constants. */
-#define PLTFM_THREAD_RETURN_VAL_SUCCESS     NULL
-#define PLTFM_THREAD_RETURN_VAL_FAILURE     NULL
+/*
+ * Macro to declare a thread start routine.
+ * As far the programmer is concerned the thread start routine has the
+ * following signature - 
+ *      void start_routine(void);
+ * i.e. the start routine accepts no parameters and returns no value.
+ */
+#define DECL_THREAD_ROUTINE(sr)             __thread_return_t (sr)(__thread_arg_t __dummy_arg)
+
+/* Macro to be used to exit a thread start routine. */
+#define EXIT_THREAD_ROUTINE                 return (__thread_return_t)NULL
 
 
 /* --------------------------------------------------- Function Declarations */
@@ -48,35 +53,16 @@ typedef pltfm_thread_return_t (*PLTFM_THREAD_START_ROUTINE)(pltfm_thread_arg_t);
 
 /*
 int pltfm_thread_create(OUT pltfm_thread_t*,
-                           IN pltfm_thread_attr_t*,
-                           IN PLTFM_THREAD_START_ROUTINE,
-                           IN pltfm_thread_arg_t);
+                           IN PLTFM_THREAD_START_ROUTINE);
 */
-#define pltfm_thread_create(t, t_at, sr, t_ar)  null_thread_create((pltfm_thread_t*)(t),\
-                                                                   (pltfm_thread_attr_t*)(t_at),\
-                                                                   (PLTFM_THREAD_START_ROUTINE)(sr),\
-                                                                   (pltfm_thread_arg_t)(t_ar))
-
-/*
-int pltfm_thread_cancel(IN pltfm_thread_t);
-*/
-#define pltfm_thread_cancel(t)              null_thread_cancel((pltfm_thread_t)(t))
+#define pltfm_thread_create(t, sr)          null_thread_create((pltfm_thread_t*)(t),\
+                                                               (__THREAD_START_ROUTINE)(sr))
 
 /*
 int pltfm_thread_join(IN pltfm_thread_t,
                         OUT void **retval);
 */
-#define pltfm_thread_join(t, retval)        null_thread_join((pltfm_thread_t)(t), (retval))
-
-/*
-int pltfm_thread_attr_init(OUT pltfm_thread_attr_t*);
-*/
-#define pltfm_thread_attr_init(t_at)        null_thread_attr_init((pltfm_thread_attr_t)(t_at))
-
-/*
-int pltfm_thread_attr_destroy(IN pltfm_thread_attr_t*);
-*/
-#define pltfm_thread_attr_destroy(t_at)     null_thread_attr_destroy((pltfm_thread_attr_t)(t_at))
+#define pltfm_thread_join(t)                null_thread_join((pltfm_thread_t)(t))
 
 /*
 int pltfm_thread_yield(void);
@@ -88,11 +74,9 @@ int pltfm_thread_yield(void);
  * Task/Thread Synchronization Primitives
  */
 /*
-int pltfm_mutex_init(OUT pltfm_mutex_t* ,
-                       IN pltfm_mutexattr_t* );
+int pltfm_mutex_init(OUT pltfm_mutex_t* );
 */
-#define pltfm_mutex_init(m, m_at)           null_thread_mutex_init((pltfm_mutex_t*)(m),\
-                                                                   (pltfm_mutexattr_t*)(m_at))
+#define pltfm_mutex_init(m)                 null_thread_mutex_init((pltfm_mutex_t*)(m))
 
 /*
 int pltfm_mutex_destroy(IN pltfm_mutex_t* );
@@ -110,11 +94,9 @@ int pltfm_mutex_unlock(INOUT pltfm_mutex_t* );
 #define pltfm_mutex_unlock(m)               null_thread_mutex_unlock((pltfm_mutex_t*)(m))
 
 /*
-int pltfm_cond_init(OUT pltfm_cond_t* ,
-                      IN pltfm_condattr_t* );
+int pltfm_cond_init(OUT pltfm_cond_t* );
 */
-#define pltfm_cond_init(c, c_at)            null_thread_cond_init((pltfm_cond_t*)(c),\
-                                                                  (pltfm_condattr_t*)(c_at))
+#define pltfm_cond_init(c)                  null_thread_cond_init((pltfm_cond_t*)(c))
 
 /*
 int pltfm_cond_destroy(OUT pltfm_cond_t* );

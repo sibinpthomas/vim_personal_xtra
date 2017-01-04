@@ -43,6 +43,9 @@ extern "C"
 #define pltfm_strrchr(s, c)                 strrchr((char *)(s), (int)(c))
 #define pltfm_strstr(s, ss)                 strstr((char *)(s), (char *)(ss))
 
+/* Abstractions for functions converting between numbers and strings. */
+#define pltfm_strtoul(s, endptr, base)      strtoul((char *)(s), (char **)(endptr), (int)(base))
+    
 /* Abstractions for Memory manipulation functions. */
 #define pltfm_memchr(b, c, n)               memchr((b), (int)(c), (size_t)(n))
 #define pltfm_memset(b, c, n)               memset((b), (int)(c), (size_t)(n))

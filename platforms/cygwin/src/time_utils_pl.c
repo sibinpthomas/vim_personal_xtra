@@ -2,6 +2,8 @@
 #include "logger.h"
 #include "time_utils_export.h"
 
+int clock_gettime(clockid_t clk_id, struct timespec *tp);
+
 API_RESULT get_current_time(TIME_SPAN *ct)
 {
     struct timespec curr_timespec;

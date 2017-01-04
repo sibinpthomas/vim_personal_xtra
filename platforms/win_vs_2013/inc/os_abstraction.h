@@ -12,33 +12,38 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#include "null_os.h"
-#include "Windows.h"
+#include <Windows.h>
 #include "generic_type_abstraction.h"
 
-/* Datatype to represent Thread or Task Identifier*/
-typedef INT32                               pltfm_thread_t;
-/* Datatype to represent Thread or Task Attribute*/
-typedef INT32                               pltfm_thread_attr_t;
+/* Datatype to represent Thread or Task Identifier */
+typedef HANDLE                              pltfm_thread_t;
 /* Datatype to represent Mutex object */
-typedef INT32                               pltfm_mutex_t;
-/* Datatype to represent Attributes of a Mutexobject*/
-typedef INT32                               pltfm_mutexattr_t;
-/* Datatype to represent Conditional Variableobject*/
-typedef INT32                               pltfm_cond_t;
-/* Datatype to represent Attributes of a ConditionalVariableobject*/
-typedef INT32                               pltfm_condattr_t;
-/* Datatype to represent the return value of a thread start routine */
-typedef void*                               pltfm_thread_return_t;
-/* Datatype to represent the argument to a thread start routine */
-typedef void*                               pltfm_thread_arg_t;
+typedef SRWLOCK                             pltfm_mutex_t;
+/* Datatype to represent Conditional Variable object */
+typedef CONDITION_VARIABLE                  pltfm_cond_t;
 
-/* Datatype to represent thread start routines */
-typedef pltfm_thread_return_t (*PLTFM_THREAD_START_ROUTINE)(pltfm_thread_arg_t);
+/* > Internal - 
+ *          Datatype to represent the return value of a thread start routine */
+typedef DWORD                               __thread_return_t;
+/* > Internal - 
+ *          Datatype to represent the argument to a thread start routine */
+typedef LPVOID                              __thread_arg_t;
 
-/* Thread return type constants. */
-#define PLTFM_THREAD_RETURN_VAL_SUCCESS     NULL
-#define PLTFM_THREAD_RETURN_VAL_FAILURE     NULL
+/* > Internal - 
+ *          Datatype to represent thread start routines */
+typedef __thread_return_t(__stdcall *__THREAD_START_ROUTINE)(__thread_arg_t);
+
+/*
+ * Macro to declare a thread start routine.
+ * As far the programmer is concerned the thread start routine has the
+ * following signature - 
+ *      void start_routine(void);
+ * i.e. the start routine accepts no parameters and returns no value.
+ */
+#define DECL_THREAD_ROUTINE(sr)             __thread_return_t (sr)(__thread_arg_t __dummy_arg)
+
+/* Macro to be used to exit a thread start routine. */
+#define EXIT_THREAD_ROUTINE                 return (__thread_return_t)0
 
 
 /* --------------------------------------------------- Function Declarations */
@@ -49,90 +54,88 @@ typedef pltfm_thread_return_t (*PLTFM_THREAD_START_ROUTINE)(pltfm_thread_arg_t);
 
 /*
 int pltfm_thread_create(OUT pltfm_thread_t*,
-                           IN pltfm_thread_attr_t*,
-                           IN PLTFM_THREAD_START_ROUTINE,
-                           IN pltfm_thread_arg_t);
+                        IN __THREAD_START_ROUTINE );
 */
-#define pltfm_thread_create(t, t_at, sr, t_ar)  null_thread_create((pltfm_thread_t*)(t),\
-                                                                   (pltfm_thread_attr_t*)(t_at),\
-                                                                   (PLTFM_THREAD_START_ROUTINE)(sr),\
-                                                                   (pltfm_thread_arg_t)(t_ar))
+#define pltfm_thread_create(t, sr)  \
+    ((((*((pltfm_thread_t*)(t))) = CreateThread(NULL,\
+                                                0,\
+                                                (__THREAD_START_ROUTINE)(sr),\
+                                                NULL,\
+                                                0,\
+                                                NULL)) \
+                                                    != NULL) ? 0 : -1)
 
 /*
-int pltfm_thread_cancel(IN pltfm_thread_t);
+int pltfm_thread_join(IN pltfm_thread_t);
 */
-#define pltfm_thread_cancel(t)              null_thread_cancel((pltfm_thread_t)(t))
-
-/*
-int pltfm_thread_join(IN pltfm_thread_t,
-                        OUT void **retval);
-*/
-#define pltfm_thread_join(t, retval)        null_thread_join((pltfm_thread_t)(t), (retval))
-
-/*
-int pltfm_thread_attr_init(OUT pltfm_thread_attr_t*);
-*/
-#define pltfm_thread_attr_init(t_at)        null_thread_attr_init((pltfm_thread_attr_t)(t_at))
-
-/*
-int pltfm_thread_attr_destroy(IN pltfm_thread_attr_t*);
-*/
-#define pltfm_thread_attr_destroy(t_at)     null_thread_attr_destroy((pltfm_thread_attr_t)(t_at))
+#define pltfm_thread_join(t)  \
+    ((WaitForSingleObject((t), INFINITE) == WAIT_OBJECT_0) ? 0 : -1)
 
 /*
 int pltfm_thread_yield(void);
 */
-#define pltfm_thread_yield()                null_thread_yield()
+#define pltfm_thread_yield()                ((0 != SwitchToThread()) ? 0 : -1)
 
 
 /* 
  * Task/Thread Synchronization Primitives
  */
 /*
-int pltfm_mutex_init(OUT pltfm_mutex_t* ,
-                       IN pltfm_mutexattr_t* );
+int pltfm_mutex_init(OUT pltfm_mutex_t* );
 */
-#define pltfm_mutex_init(m, m_at)           null_thread_mutex_init((pltfm_mutex_t*)(m),\
-                                                                   (pltfm_mutexattr_t*)(m_at))
+#define pltfm_mutex_init(m)                 (InitializeSRWLock((pltfm_mutex_t*)(m)), 0)
 
 /*
 int pltfm_mutex_destroy(IN pltfm_mutex_t* );
 */
-#define pltfm_mutex_destroy(m)              null_thread_mutex_destroy((pltfm_mutex_t*)(m))
+#define pltfm_mutex_destroy(m)              (0)
 
 /*
 int pltfm_mutex_lock(INOUT pltfm_mutex_t* );
 */
-#define pltfm_mutex_lock(m)                 null_thread_mutex_lock((pltfm_mutex_t*)(m))
+#define pltfm_mutex_lock(m)                 (AcquireSRWLockExclusive((pltfm_mutex_t*)(m)), 0)
 
 /*
 int pltfm_mutex_unlock(INOUT pltfm_mutex_t* );
 */
-#define pltfm_mutex_unlock(m)               null_thread_mutex_unlock((pltfm_mutex_t*)(m))
+#define pltfm_mutex_unlock(m)               (ReleaseSRWLockExclusive((pltfm_mutex_t*)(m)), 0)
 
 /*
-int pltfm_cond_init(OUT pltfm_cond_t* ,
-                      IN pltfm_condattr_t* );
+int pltfm_cond_init(OUT pltfm_cond_t* );
 */
-#define pltfm_cond_init(c, c_at)            null_thread_cond_init((pltfm_cond_t*)(c),\
-                                                                  (pltfm_condattr_t*)(c_at))
+#define pltfm_cond_init(c)                  (InitializeConditionVariable((pltfm_cond_t*)(c)), 0)
 
 /*
 int pltfm_cond_destroy(OUT pltfm_cond_t* );
 */
-#define pltfm_cond_destroy(c)               null_thread_cond_destroy((pltfm_cond_t*)(c))
+#define pltfm_cond_destroy(c)               (0)
+
+/*
+Any value that is not CONDITION_VARIABLE_LOCKMODE_SHARED is supposed to imply
+that the SRW lock is in exclusive mode.
+Defining CONDITION_VARIABLE_LOCKMODE_EXCLUSIVE so as to avert accidentally
+providing the same value to the 'Flags' parameter as CONDITION_VARIABLE_LOCKMODE_SHARED
+when 'Exclusive' was intended.
+
+Refer - https://msdn.microsoft.com/en-us/library/windows/desktop/ms686304.aspx
+*/
+#define CONDITION_VARIABLE_LOCKMODE_EXCLUSIVE  (0)
 
 /*
 int pltfm_cond_wait(INOUT pltfm_cond_t* ,
-                      INOUT pltfm_mutex_t* );
+                    INOUT pltfm_mutex_t* );
 */
-#define pltfm_cond_wait(c, c_m)             null_thread_cond_wait((pltfm_cond_t*)(c),\
-                                                                  (pltfm_mutex_t*)(c_m))
+#define pltfm_cond_wait(c, c_m)  \
+    ((0 != SleepConditionVariableSRW((pltfm_cond_t*)(c),\
+                                     (pltfm_mutex_t*)(c_m),\
+                                     INFINITE,\
+                                     CONDITION_VARIABLE_LOCKMODE_EXCLUSIVE)) ?\
+                                         0 : -1)
 
 /*
 int pltfm_cond_signal(INOUT pltfm_cond_t* );
 */
-#define pltfm_cond_signal(c)                null_thread_cond_signal((pltfm_cond_t*)(c))
+#define pltfm_cond_signal(c)                (WakeConditionVariable((pltfm_cond_t*)(c)), 0)
 
 
 /* 
@@ -144,24 +147,24 @@ int pltfm_cond_signal(INOUT pltfm_cond_t* );
 
 void pltfm_sleep (IN UINT32 );
 */
-#define pltfm_sleep(sec)                    (void)Sleep((unsigned int)((1000) * (sec)))
+#define pltfm_sleep(sec)                    (void)Sleep((DWORD)((1000) * (sec)))
 
 /*
  * Time in milli-seconds.
 
 void pltfm_msleep(IN UINT32 );
 */
-#define pltfm_msleep(msec)                  (void)Sleep((msec))
+#define pltfm_msleep(msec)                  (void)Sleep((DWORD)(msec))
 
 /* Declaration for uSleep() function. */
-int uSleep(UINT32);
+int uSleep(UINT32 );
 
 /*
-* Time in micro-seconds.
+ * Time in micro-seconds.
 
 void pltfm_usleep(IN UINT32 );
 */
-#define pltfm_usleep(usec)                  (void)uSleep((usec))
+#define pltfm_usleep(usec)                  (void)uSleep((UINT32)(usec))
 
 #ifdef __cplusplus
 }

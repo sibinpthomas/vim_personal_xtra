@@ -59,6 +59,8 @@ typedef int                                 BOOL_T;
 #define CLR_BITNUM(val, bitnum)             ((val) &= (~(1 << (bitnum))))
 #define IS_BITNUM_SET(val, bitnum)          (EXTRACT_BITNUM((val), (bitnum)) == 1)
 #define IS_BITNUM_CLR(val, bitnum)          (EXTRACT_BITNUM((val), (bitnum)) == 0)
+#define EXTRACT_BITFIELD(val, lsb, len)     (((val) & (((1u << (len)) - 1u) <<\
+                                              (lsb))) >> (lsb))
 
 
 /* Strips the characters Space, Horizontal Tab, CR, LF from both ends of
@@ -124,7 +126,7 @@ UINT16 _betoh_bufn(UINT8 *buf, void *hnum, UINT16 nbytes);
 #define RETURN_VOID
 
 #define PLTFM_MUTEX_INIT(mutex, MODULE, errval)\
-    if (pltfm_mutex_init(&(mutex), NULL) != 0)\
+    if (pltfm_mutex_init(&(mutex)) != 0)\
     {\
         MODULE##_ERR(("Failed to initialize " #MODULE " module level mutex.\n"));\
         return errval;\
@@ -151,7 +153,7 @@ UINT16 _betoh_bufn(UINT8 *buf, void *hnum, UINT16 nbytes);
         return errval;\
     }
 #define PLTFM_COND_INIT(condv, MODULE, errval)\
-    if (pltfm_cond_init(&(condv), NULL) != 0)\
+    if (pltfm_cond_init(&(condv)) != 0)\
     {\
         MODULE##_ERR(("Failed to initialize " #MODULE " conditional variable.\n"));\
         return errval;\

@@ -42,24 +42,24 @@ UINT16 _htobe_bufn(UINTMAX hnum, UINT8 *buf, UINT16 nbytes)
     return nbytes;
 }
 
-API_RESULT assign_2h(void *hnum, UINTMAX tmp_h, UINT16 nbytes)
+DECL_STATIC API_RESULT assign_2h(void *hnum, UINTMAX tmp_h, UINT16 nbytes)
 {
     switch (nbytes)
     {
         case 1:
-            *(UINT8 *)hnum = tmp_h;
+            *(UINT8 *)hnum = (UINT8)tmp_h;
             return API_SUCCESS;
         case 2:
-            *(UINT16 *)hnum = tmp_h;
+            *(UINT16 *)hnum = (UINT16)tmp_h;
             return API_SUCCESS;
         case 3:
         case 4:
-            *(UINT32 *)hnum = tmp_h;
+            *(UINT32 *)hnum = (UINT32)tmp_h;
             return API_SUCCESS;
         default:
             if (sizeof(UINTMAX) == nbytes)
             {
-                *(UINTMAX *)hnum = tmp_h;
+                *(UINTMAX *)hnum = (UINTMAX)tmp_h;
                 return API_SUCCESS;
             }
             return API_FAILURE;

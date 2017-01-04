@@ -13,18 +13,14 @@ extern "C"
 /*
  * Threads related.
  */
-int null_thread_create(INT32* , const INT32* ,
-                         void *(*sr) (void *), void * );
-int null_thread_cancel(INT32 );
-int null_thread_join(INT32 , void ** );
-int null_thread_attr_init(INT32 t_at);
-int null_thread_attr_destroy(INT32 t_at);
+int null_thread_create(INT32* , void *(*sr) (void *));
+int null_thread_join(INT32 );
 int null_thread_yield(void);
-int null_thread_mutex_init(INT32* , const INT32* );
+int null_thread_mutex_init(INT32* );
 int null_thread_mutex_destroy(INT32* );
 int null_thread_mutex_lock(INT32* );
 int null_thread_mutex_unlock(INT32* );
-int null_thread_cond_init(INT32* , const INT32* );
+int null_thread_cond_init(INT32* );
 int null_thread_cond_destroy(INT32* );
 int null_thread_cond_wait(INT32* , INT32* );
 int null_thread_cond_signal(INT32* );
