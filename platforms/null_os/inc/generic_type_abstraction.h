@@ -108,9 +108,6 @@ typedef int                                 INT16_F;
 /* Definition of CHAR */
 typedef char                                CHAR;
 
-/* Definition of UCHAR */
-typedef unsigned char                       UCHAR;
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
